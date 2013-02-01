@@ -1,5 +1,1 @@
-package StarTrek;
-
-public class Random {
-
-}
+package StarTrek;public class Random {}
