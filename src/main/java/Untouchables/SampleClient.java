@@ -11,6 +11,7 @@ import StarTrek.Klingon;
  * 
  */
 public class SampleClient {
+
 	public static void main(String args[]) {
 		System.out.println("Simple Star Trek");
 		WebGadget wg = new WebGadget("phaser", "1000", new Klingon());
