@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Starship {
 
-	private Shield shield = new Shield(5000);
-	private List<StrategicSubsytem> subSystems;
+	public Shield shield = new Shield(5000);
+	public List<StrategicSubsytem> subSystems;
 	
 	public Starship() {
 		subSystems = new ArrayList<StrategicSubsytem>();
@@ -14,7 +14,7 @@ public class Starship {
 		subSystems.add(new Weapon(5000));
 		subSystems.add(new LifeSupport(5000));
 	}
-
+	
 	/**
 	 * Subsystem checks energy level of the shield
 	 * 		If shield energy > 0, absorb the energy hit

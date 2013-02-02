@@ -7,5 +7,4 @@ public abstract class StrategicSubsytem extends Subsytem {
 	{
 		super(initialEnergy);
 	}
-
 }
