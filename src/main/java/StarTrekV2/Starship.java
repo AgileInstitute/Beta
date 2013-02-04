@@ -5,16 +5,28 @@ import java.util.List;
 
 public class Starship {
 
+	private static final Randomizer randomizer = new Randomizer();
+
 	public Shield shield = new Shield(5000);
 	public List<Subsytem> subSystems;
 	
 	public Starship() {
 		subSystems = new ArrayList<Subsytem>();
+
 		subSystems.add(new Engine(5000));
 		subSystems.add(new Weapon(5000));
 		subSystems.add(new LifeSupport(5000));
 	}
-	
+
+	/**
+	 * Selects randomly which subsystem to hit after the shield is depleted. 
+	 * @return
+	 */
+	private Subsytem selectSystemToHit() {
+		int subSystemIndex = randomizer.nextInt(subSystems.size());
+		return subSystems.get(subSystemIndex);
+	}
+
 	/**
 	 * Subsystem checks energy level of the shield
 	 * 		If shield energy > 0, absorb the energy hit
@@ -35,14 +47,9 @@ public class Starship {
 		}
 
 		if (unabsorbedEnergy > 0) {
-			// Distribute unabsorbed energy evenly between subsytems
-			int unabsorbedEnergyPerSubsystem = unabsorbedEnergy / subSystems.size();
-			for (Subsytem subSystem : subSystems) {
-				subSystem.takeDamage(unabsorbedEnergyPerSubsystem);
-				if (unabsorbedEnergy == 0) {
-					break;
-				}
-			}
+			// Select randomly which system to hit
+			Subsytem subSystem = selectSystemToHit();
+			subSystem.takeDamage(unabsorbedEnergy);
 		}
 	}
 }
