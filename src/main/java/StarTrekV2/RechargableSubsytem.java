@@ -1,6 +1,6 @@
 package StarTrekV2;
 
-public abstract class RechargableSubsytem extends Subsytem {
+public abstract class RechargableSubsytem extends Subsystem {
 
 	private int energy;
 

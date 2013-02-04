@@ -8,10 +8,10 @@ public class Starship {
 	private static final Randomizer randomizer = new Randomizer();
 
 	public Shield shield = new Shield(5000);
-	public List<Subsytem> subSystems;
+	public List<Subsystem> subSystems;
 	
 	public Starship() {
-		subSystems = new ArrayList<Subsytem>();
+		subSystems = new ArrayList<Subsystem>();
 
 		subSystems.add(new Engine(5000));
 		subSystems.add(new Weapon(5000));
@@ -22,7 +22,7 @@ public class Starship {
 	 * Selects randomly which subsystem to hit after the shield is depleted. 
 	 * @return
 	 */
-	private Subsytem selectSystemToHit() {
+	private Subsystem selectSystemToHit() {
 		int subSystemIndex = randomizer.nextInt(subSystems.size());
 		return subSystems.get(subSystemIndex);
 	}
@@ -48,7 +48,7 @@ public class Starship {
 
 		if (unabsorbedEnergy > 0) {
 			// Select randomly which system to hit
-			Subsytem subSystem = selectSystemToHit();
+			Subsystem subSystem = selectSystemToHit();
 			subSystem.takeDamage(unabsorbedEnergy);
 		}
 	}

@@ -1,7 +1,8 @@
 import org.junit.*;
 
+import StarTrekV2.Engine;
 import StarTrekV2.Starship;
-import StarTrekV2.Subsytem;
+import StarTrekV2.Subsystem;
 
 public class StarshipTests {
 
@@ -23,7 +24,7 @@ public class StarshipTests {
 		// Check if at list one component was damaged.
 		boolean anythingDamaged = false;
 
-		for (Subsytem subsystem : ship.subSystems) {
+		for (Subsystem subsystem : ship.subSystems) {
 			anythingDamaged = anythingDamaged || subsystem.isDamaged();
 		}
 
@@ -37,13 +38,20 @@ public class StarshipTests {
 		
 		Assert.assertTrue("Shield is not depled", ship.shield.isDepleted());
 		
-		for (Subsytem subsystem : ship.subSystems) {
+		for (Subsystem subsystem : ship.subSystems) {
 			Assert.assertFalse("Subsystem is damage while it is supposed to be active", subsystem.isDamaged());
 		}
 	}
 
 	@Test
-	public void testIfComponentNeedsToBeRecharged() {
+	public void testIfComponentUnderSubsystemNeedsToBeRepaired() {
+		Subsystem engine = new Engine(1000);
 		
+		engine.takeDamage(1000);
+		Assert.assertTrue(engine.isDamaged());
+		Assert.assertTrue(engine.isRepairable());
+
+		engine.takeDamage(100000);
+		Assert.assertFalse(engine.isRepairable());
 	}
 }
