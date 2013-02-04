@@ -1,33 +1,43 @@
 package StarTrekV2;
 
-public class Shield extends Subsytem {
+public class Shield extends RechargableSubsytem {
 
-	private boolean activated = true;
-	
 	public Shield(
 			int initialEnergy) 
 	{
 		super(initialEnergy);
 	}
 
-	public boolean isActivated() {
-		return activated;
-	}
-	
-	public void deplete() {
-		activated = false;
+	public boolean isDepleted() {
+		return (getEnergy() == 0);
 	}
 	
 	@Override
-	public int hit(int energyHit) {
-		if (activated) {
-			int remainingEnergy = super.hit(energyHit);
-			if (remainingEnergy <= 0) {
-				// Deplete shield
-				deplete();
-			}
-			return remainingEnergy;
+	public void takeDamage(
+			int energyHit) 
+	{
+		// Shield cannot be damaged. If depleted, it does not absorb any energy
+	}
+
+	/**
+	 * Returns un-absorbed energy
+	 * 
+	 * @param energyHit
+	 * @return
+	 */
+	public int absorb(
+			int energyHit) 
+	{
+		if (energyHit <= getEnergy()) {
+			// Absorb entire hit
+			discharge(energyHit);
+			return 0;
 		}
-		return -energyHit;
+		else {
+			// Absorb hit partially
+			int unabsorbedEnergy = energyHit - getEnergy();
+			discharge(getEnergy());
+			return unabsorbedEnergy;
+		}
 	}
 }

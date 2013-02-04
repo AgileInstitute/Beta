@@ -30,7 +30,7 @@ public class MyUnitTest {
 		Starship ship = new Starship();
 		ship.hitStarship(5000);
 		
-		Assert.assertFalse(ship.shield.isActivated());
+		Assert.assertTrue(ship.shield.isDepleted());
 		
 		for (Subsytem subsystem : ship.subSystems) {
 			Assert.assertFalse(subsystem.isDamaged());

@@ -2,37 +2,25 @@ package StarTrekV2;
 
 public abstract class Subsytem {
 
-	protected int energy;
-	protected boolean damaged = false;
-	
+	private int damage = 0;
+	private int strengthAspect = 1;
+
+	public Subsytem() {
+	}
+
 	public Subsytem(
-			int initialEnergy) 
+			int strength)
 	{
-		energy = initialEnergy;
+		strengthAspect = strength;
 	}
 
 	public boolean isDamaged() {
-		return damaged;
+		return (damage > 0);
 	}
-	
-	public int getEnergy() {
-		return energy;
-	}
-	
-	public int hit(
+
+	public void takeDamage(
 			int energyHit) 
 	{
-		int remainingEnergy = energy - energyHit;
-
-		if (remainingEnergy > 0) {
-			// Absorb energy
-			energy = remainingEnergy;
-		}
-		else {
-			energy = 0;
-			damaged = true;
-		}
-		
-		return remainingEnergy;
+		damage += (energyHit / strengthAspect);
 	}
 }

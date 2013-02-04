@@ -6,10 +6,10 @@ import java.util.List;
 public class Starship {
 
 	public Shield shield = new Shield(5000);
-	public List<StrategicSubsytem> subSystems;
+	public List<Subsytem> subSystems;
 	
 	public Starship() {
-		subSystems = new ArrayList<StrategicSubsytem>();
+		subSystems = new ArrayList<Subsytem>();
 		subSystems.add(new Engine(5000));
 		subSystems.add(new Weapon(5000));
 		subSystems.add(new LifeSupport(5000));
@@ -24,13 +24,22 @@ public class Starship {
 	 * 
 	 * @param energyHit
 	 */
-	public void hitStarship(int energyHit) {
+	public void hitStarship(
+			int energyHit) 
+	{
+		int unabsorbedEnergy = energyHit;
+
+		if (!shield.isDepleted()) {
 		// Hit shield first
-		int remainingEnergy = shield.hit(energyHit);
-		if (remainingEnergy < 0) {
-			for (StrategicSubsytem subSystem : subSystems) {
-				remainingEnergy = subSystem.hit(-remainingEnergy);
-				if (remainingEnergy == 0) {
+			unabsorbedEnergy = shield.absorb(energyHit);
+		}
+
+		if (unabsorbedEnergy > 0) {
+			// Distribute unabsorbed energy evenly between subsytems
+			int unabsorbedEnergyPerSubsystem = unabsorbedEnergy / subSystems.size();
+			for (Subsytem subSystem : subSystems) {
+				subSystem.takeDamage(unabsorbedEnergyPerSubsystem);
+				if (unabsorbedEnergy == 0) {
 					break;
 				}
 			}
