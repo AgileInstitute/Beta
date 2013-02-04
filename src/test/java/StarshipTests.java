@@ -47,7 +47,7 @@ public class StarshipTests {
 
 		Assert.assertTrue("Shield is depeleted but there is a subsytem that is active", anythingDamaged);
 		
-		// Repair startship
+		// Repair starship
 		ship.repairStarship();
 		
 		// Check if there is no damaged components.

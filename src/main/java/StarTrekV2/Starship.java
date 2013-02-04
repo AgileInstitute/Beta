@@ -24,7 +24,7 @@ public class Starship {
 	 * @return
 	 */
 	private Subsystem selectSystemToHit() {
-		int subSystemIndex = randomizer.nextInt(subSystems.size());
+		int subSystemIndex = randomizer.nextInt(subSystems.size() - 1);
 		return subSystems.get(subSystemIndex);
 	}
 
@@ -54,6 +54,9 @@ public class Starship {
 		}
 	}
 	
+	/**
+	 * Repairs repairable damaged subsystems if any
+	 */
 	public void repairStarship() {
 		for (Subsystem subSystem : subSystems) {
 			
