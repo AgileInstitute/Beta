@@ -9,6 +9,7 @@ public class Starship {
 
 	public Shield shield = new Shield(5000);
 	public List<Subsystem> subSystems;
+	public SystemRestore restoreSource = new SystemRestore();
 	
 	public Starship() {
 		subSystems = new ArrayList<Subsystem>();
@@ -42,7 +43,7 @@ public class Starship {
 		int unabsorbedEnergy = energyHit;
 
 		if (!shield.isDepleted()) {
-		// Hit shield first
+			// Hit shield first
 			unabsorbedEnergy = shield.absorb(energyHit);
 		}
 
@@ -50,6 +51,20 @@ public class Starship {
 			// Select randomly which system to hit
 			Subsystem subSystem = selectSystemToHit();
 			subSystem.takeDamage(unabsorbedEnergy);
+		}
+	}
+	
+	public void repairStarship() {
+		for (Subsystem subSystem : subSystems) {
+			
+			if (subSystem.isDamaged()) {
+				if (subSystem.isRepairable()) {
+					restoreSource.fixSubsystem(subSystem);
+				}
+				else {
+					System.err.println("Starship lost its subsystem");
+				}
+			}
 		}
 	}
 }
