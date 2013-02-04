@@ -7,18 +7,47 @@ public class Starship {
 
 	private static final Randomizer randomizer = new Randomizer();
 
-	public Shield shield = new Shield(5000);
-	public List<Subsystem> subSystems;
+	public final Shield shield = new Shield(5000);
+	public final List<Subsystem> subSystems;
+
 	public SystemRestore restoreSource = new SystemRestore();
 	
+	/**
+	 * Creates starship with default components
+	 */
 	public Starship() {
+		this(true);
+	}
+
+	public Starship(
+			boolean initialize) 
+	{
 		subSystems = new ArrayList<Subsystem>();
 
+		if (initialize) {
+			initialize();
+		}
+	}
+
+	/**
+	 * Add a few subsystems to this starship
+	 */
+	private void initialize() {
 		subSystems.add(new Engine(5000));
 		subSystems.add(new Weapon(5000));
 		subSystems.add(new LifeSupport(5000));
 	}
+	
+	public void addSubsystem(Subsystem subSystem) {
+		if (subSystem != null) {
+			subSystems.add(subSystem);
+		}
+	}
 
+	public List<Subsystem> getAllSubsystems() {
+		return subSystems;
+	}
+	
 	/**
 	 * Selects randomly which subsystem to hit after the shield is depleted. 
 	 * @return
