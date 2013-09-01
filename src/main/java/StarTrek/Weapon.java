@@ -1,1 +1,0 @@
-package StarTrek;public abstract class Weapon {	protected static final String TARGET = "target";	protected int damage = 0;		public abstract void fire(Galaxy wg);		public int timeToRepair() {		return damage;	}	public void takesDamage(			int energyHit) 	{		damage += energyHit / 100;	}}
