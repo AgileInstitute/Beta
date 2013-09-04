@@ -8,6 +8,44 @@ import org.junit.*;
 
 public class MyUnitTest {
 	@Test
+	public void getPurchasedBookByEdition() {
+		User bart = new User("Bart");
+		Book kindleEdition = new Book("War & Peace", Edition.KINDLE );
+		
+		bart.addPurchase(kindleEdition);
+		
+		Assert.assertEquals(kindleEdition,bart.getPurchasedBook(kindleEdition));
+		
+	}
+
+
+
+	
+	@Test
+	public void IsDifferentEdition() {
+		Book unknownEdition = new Book(anyBookTitle(), Edition.PAPERBACK );
+		Assert.assertFalse(unknownEdition.isSameEdition(Edition.KINDLE));
+	
+	}
+	@Test
+	public void IsSameEdition() {
+		Book unknownEdition = new Book(anyBookTitle(), Edition.KINDLE );
+		Assert.assertTrue(unknownEdition.isSameEdition(Edition.KINDLE));
+	
+	}
+	@Test
+	public void hasNotPurchasedBookByEdition() {
+		User bart = new User("Bart");
+		Book kindleEdition = new Book(anyBookTitle(), Edition.KINDLE );
+		Book kindleEditionAgain = new Book("War & Peace", Edition.KINDLE );
+		
+		bart.addPurchase(kindleEdition);
+		
+		Assert.assertFalse(bart.hasPurchasedBook(kindleEditionAgain));
+		
+		
+	}
+	@Test
 	public void hasPurchasedBookByEdition() {
 		User bart = new User("Bart");
 		Book kindleEdition = new Book("War & Peace", Edition.KINDLE );
