@@ -22,4 +22,11 @@ public class User {
 		return false;
 	}
 
+	public Book getPurchasedBook(Book edition) {
+		for (Book next : purchases) {
+			if (next.isSameTitleAs(edition) && next.edition() == edition.edition())
+				return next;
+	 }
+		return null;
+	}
 }
