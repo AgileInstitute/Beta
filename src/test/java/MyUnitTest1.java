@@ -38,7 +38,28 @@ Assert.assertTrue(book.addBook("Design Patterns", 10.95));
 */
 }
 
+@Test
+public void checkDiscount() {
+BookClub bookclub = new BookClub();
+List<Book> booklist = new ArrayList<Book>();
+double minPrice = 0.0;
 
+Assert.assertTrue(bookclub.isMemberBC("User1"));
+
+booklist.add(new Book("Angels & Demons", 19.95));
+booklist.add(new Book("World Peace", 29.95));
+booklist.add(new Book("Love of God", 39.95));
+booklist.add(new Book("Life", 9.95));
+
+if (bookclub.isDiscountEligible(booklist)) {
+Collections.sort(booklist);
+minPrice = booklist.get(0).getPrice();
+
+}
+
+
+
+} 
 
 
 }
