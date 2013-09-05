@@ -8,6 +8,8 @@ import java.util.List;
 
 import main.java.Book;
 import main.java.BookClub;
+import main.java.Order;
+
 
 import org.junit.*;
 
@@ -42,6 +44,7 @@ Assert.assertTrue(book.addBook("Design Patterns", 10.95));
 public void checkDiscount() {
 BookClub bookclub = new BookClub();
 List<Book> booklist = new ArrayList<Book>();
+Order order = new Order();
 double minPrice = 0.0;
 
 Assert.assertTrue(bookclub.isMemberBC("User1"));
@@ -52,11 +55,10 @@ booklist.add(new Book("Love of God", 39.95));
 booklist.add(new Book("Life", 9.95));
 
 if (bookclub.isDiscountEligible(booklist)) {
-Collections.sort(booklist);
-minPrice = booklist.get(0).getPrice();
-
-}
-
+	Collections.sort(booklist);
+	minPrice = booklist.get(0).getPrice();
+	order.addDiscount(booklist.get(0).getTitle(), booklist.get(0).getPrice());
+} 
 
 
 } 
