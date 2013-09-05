@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Order {
 	List<Book> booklist = new ArrayList<Book>();
+    String reason = "";
+	Double discount_val=(double) 0;
 	public Order() {
 		
 
@@ -21,16 +23,40 @@ public class Order {
 	public String displayList() {
 		String display = "Title Price "; 
 		Double price;
-		System.out.println(booklist.size());
 
-		System.out.println(booklist.get(0).getTitle());
-		System.out.println(booklist.get(0).getPrice());
-		display = display.concat(booklist.get(0).getTitle());
+		for(int size = 0; size < booklist.size(); size = size +1){
+		display = display.concat(booklist.get(size).getTitle());
 		display = display.concat(" ");
-		price = booklist.get(0).getPrice();
+		price = booklist.get(size).getPrice();
 		display = display.concat(price.toString());		
+		display = display.concat(" ");	
+		}
+		if (discount_val != 0){
+		display = display.concat(reason);	
+		display = display.concat(" -");	
+		display = display.concat(discount_val.toString());
+		}
 		
 		return display;
+	}
+
+
+	public void addDiscount(String discription, double discount) {
+		
+		discount_val = discount;
+		reason= discription;
+		return;
+	}
+
+
+	public Double getSubTotal() {
+		Double priceTotal = 0.0 ;
+
+		for(int size = 0; size < booklist.size(); size = size +1){	
+			priceTotal += booklist.get(size).getPrice();
+		}
+		priceTotal -= discount_val;
+		return priceTotal;
 	}
 
 }
