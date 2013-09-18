@@ -11,7 +11,7 @@ public class Ship {
 		this.shield = new Shield();
 		this.energy = _INITIAL_ENERGY;
 	}
-
+	
 	public String getRegistration() {
 		return registration;
 	}
@@ -19,12 +19,24 @@ public class Ship {
 	public int getShieldLevel() {
 		return this.shield.getEnergyLevel();
 	}
-	
-	public void transferEnergyToShields(int energy) {
-		this.shield.transferEnergy(energy);
-	}
-	
+
 	public int getEnergyLevel() {
 		return this.energy;
+	}
+
+	public void transferEnergyToShields(int energy) {
+		int transferAmount = energy;
+		if (transferAmount > getEnergyLevel()) {
+			transferAmount = getEnergyLevel();
+		}
+		if (shield.getEnergyLevel() + energy > Shield._MAX_SHIELD_ENERGY) {
+			transferAmount = shield.getEnergyLevel() + energy - Shield._MAX_SHIELD_ENERGY;
+		}
+		shield.transferEnergy(transferAmount);
+		this.energy -= transferAmount;
+	}
+	
+	public void takeDamage(int damage) {
+		shield.transferEnergy(-damage);
 	}
 }
