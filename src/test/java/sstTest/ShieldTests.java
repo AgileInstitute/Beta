@@ -4,12 +4,12 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import sst.Shield;
+import sst.ShieldControl;
 
 public class ShieldTests {
 	@Test
 	public void TransferEnergyToShields() {
-		Shield shield = new Shield();
+		ShieldControl shield = new ShieldControl();
 		int energyToTransfer = 1000;
 		shield.transferEnergy(energyToTransfer);
 		Assert.assertEquals(energyToTransfer, shield.getEnergyLevel());
@@ -18,20 +18,20 @@ public class ShieldTests {
 	@Test
 	public void TestInitialEnergyConstructor() {
 		int initialEnergy = 1000;
-		Shield shield = new Shield(initialEnergy);
+		ShieldControl shield = new ShieldControl(initialEnergy);
 		Assert.assertEquals(initialEnergy, shield.getEnergyLevel());
 	}
 	
 	@Test
 	public void OverloadMaximumShieldEnergy() {
-		Shield shield = new Shield(Shield._MAX_SHIELD_ENERGY);
+		ShieldControl shield = new ShieldControl(ShieldControl._MAX_SHIELD_ENERGY);
 		shield.transferEnergy(1000);
-		Assert.assertEquals(Shield._MAX_SHIELD_ENERGY, shield.getEnergyLevel());
+		Assert.assertEquals(ShieldControl._MAX_SHIELD_ENERGY, shield.getEnergyLevel());
 	}
 	
 	@Test
 	public void NoLessThanZeroShieldEnergy() {
-		Shield shield = new Shield(1000);
+		ShieldControl shield = new ShieldControl(1000);
 		int deficit = shield.transferEnergy(-2000);
 		Assert.assertEquals(0, shield.getEnergyLevel());
 		Assert.assertEquals(-1000, deficit);
@@ -39,7 +39,7 @@ public class ShieldTests {
 	
 	@Test
 	public void FindHowMuchIsLeftOverFromOverloadMaximumShieldEnergy() {
-		Shield shield = new Shield(Shield._MAX_SHIELD_ENERGY);
+		ShieldControl shield = new ShieldControl(ShieldControl._MAX_SHIELD_ENERGY);
 		int transferAmount = 1000;
 		int remainder = shield.transferEnergy(transferAmount);
 		Assert.assertEquals(transferAmount, remainder);
@@ -47,7 +47,7 @@ public class ShieldTests {
 	
 	@Test
 	public void DamageShields() {
-		Shield shield = new Shield(1000);
+		ShieldControl shield = new ShieldControl(1000);
 		int damage = 500;
 		shield.takeDamage(damage);
 		Assert.assertEquals(500, shield.getEnergyLevel());
@@ -55,9 +55,27 @@ public class ShieldTests {
 	
 	@Test
 	public void DamageToShip() {
-		Shield shield = new Shield(1000);
+		ShieldControl shield = new ShieldControl(1000);
 		int damage = 2000;
 		int subsystemDamage = shield.takeDamage(damage);
 		Assert.assertEquals(1000, subsystemDamage);
 	}
+	
+	@Test
+	public void DamageShieldControlSubsystem() {
+		ShieldControl shield = new ShieldControl(0);
+		Assert.assertEquals(false, shield.isDamaged());
+		shield.damage(500);
+		Assert.assertEquals(true,  shield.isDamaged());
+		Assert.assertEquals(10, shield.getTenthsOfRepairDays());
+	}
+	
+//	@Test
+//	public void PreventEnergyTransferWhenDamaged() {
+//		ShieldControl shield = new ShieldControl(0);
+//		shield.damage(500);
+//		shield.transferEnergy(1000);
+//		Assert.assertEquals(0, shield.getEnergyLevel());
+//	}
+	
 }

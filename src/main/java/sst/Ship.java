@@ -3,18 +3,18 @@ package sst;
 public class Ship {
 	public static final int _DEFAULT_INITIAL_ENERGY = 50000;
 	private String registration = null;
-	private Shield shield = null;
+	private ShieldControl shield = null;
 	int energy = 0;
 	
 	public Ship(String registration) {
 		this.registration = registration;
-		this.shield = new Shield();
+		this.shield = new ShieldControl();
 		this.energy = _DEFAULT_INITIAL_ENERGY;
 	}
 	
 	public Ship(String registration, int initialEnergy) {
 		this.registration = registration;
-		this.shield = new Shield();
+		this.shield = new ShieldControl();
 		this.energy = initialEnergy;
 	}
 
@@ -42,8 +42,8 @@ public class Ship {
 			transferAmount = getEnergyLevel();
 			deficitEnergy = energy - transferAmount;
 		}
-		if (shield.getEnergyLevel() + energy > Shield._MAX_SHIELD_ENERGY) {
-			transferAmount = shield.getEnergyLevel() + energy - Shield._MAX_SHIELD_ENERGY;
+		if (shield.getEnergyLevel() + energy > ShieldControl._MAX_SHIELD_ENERGY) {
+			transferAmount = shield.getEnergyLevel() + energy - ShieldControl._MAX_SHIELD_ENERGY;
 		}
 		shield.transferEnergy(transferAmount);
 		this.energy -= transferAmount;
