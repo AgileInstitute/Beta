@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import sst.ShieldControl;
 import sst.Ship;
 import sst.SubSystem;
 
@@ -18,6 +19,7 @@ public class ShipTests {
 		mapOfSubSystems.put("Weapons", new SubSystem(2000, 200));
 		mapOfSubSystems.put("Engine", new SubSystem(1500, 100));
 		mapOfSubSystems.put("LifeSupport", new SubSystem(1000, 100));
+		mapOfSubSystems.put("ShieldControl", new ShieldControl(0));
 	}
 
 	@Test
@@ -26,6 +28,9 @@ public class ShipTests {
 		Ship ship = new Ship(registration, mapOfSubSystems);
 		Assert.assertEquals(registration, ship.getRegistration());
 	}
+	
+
+	
 
 	@Test
 	public void ShieldsAtStart() {

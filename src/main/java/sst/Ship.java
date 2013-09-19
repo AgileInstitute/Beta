@@ -9,13 +9,11 @@ import java.util.Set;
 public class Ship {
 	public static final int _DEFAULT_INITIAL_ENERGY = 50000;
 	private String registration = null;
-	private ShieldControl shield = null;
 	int energy = 0;
 	private HashMap<String, SubSystem> listOfSubSystems = new HashMap<String, SubSystem>();
 
 	public Ship(String registration, HashMap<String, SubSystem> listOfSubSystems) {
 		this.registration = registration;
-		this.shield = new ShieldControl();
 		this.energy = _DEFAULT_INITIAL_ENERGY;
 		this.listOfSubSystems = listOfSubSystems;
 	}
@@ -23,9 +21,12 @@ public class Ship {
 	public Ship(String registration, int initialEnergy,
 			HashMap<String, SubSystem> listOfSubSystems) {
 		this.registration = registration;
-		this.shield = new ShieldControl();
 		this.energy = initialEnergy;
 		this.listOfSubSystems = listOfSubSystems;
+	}
+	
+	private ShieldControl getShieldControl() {
+		return (ShieldControl) listOfSubSystems.get("ShieldControl");
 	}
 
 	public String getRegistration() {
@@ -33,7 +34,7 @@ public class Ship {
 	}
 
 	public int getShieldLevel() {
-		return this.shield.getEnergyLevel();
+		return getShieldControl().getEnergyLevel();
 	}
 
 	public int getEnergyLevel() {
@@ -54,14 +55,14 @@ public class Ship {
 			deficitEnergy = energy - transferAmount;
 		}
 		this.energy -= transferAmount;
-		int extraEnergy = shield.transferEnergy(transferAmount);
+		int extraEnergy = getShieldControl().transferEnergy(transferAmount);
 		this.energy += extraEnergy;
 		return extraEnergy - deficitEnergy;
 	}
 
 	public void takeDamage(int damage) {
 
-		int overflow = shield.takeShieldDamage(damage);
+		int overflow = getShieldControl().takeShieldDamage(damage);
 		if (overflow > 0) {
 			SubSystem subSystem = pickRandomSubSystem();
 			subSystem.damage(overflow);
