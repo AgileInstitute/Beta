@@ -62,7 +62,7 @@ public class Ship {
 	}
 	
 	public void takeDamage(int damage) {
-		int overflow = shield.takeDamage(damage);
+		int overflow = shield.takeShieldDamage(damage);
 		if (overflow > 0) {
 			//TODO: damage a subsystem			
 		}

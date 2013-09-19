@@ -49,7 +49,7 @@ public class ShieldTests {
 	public void DamageShields() {
 		ShieldControl shield = new ShieldControl(1000);
 		int damage = 500;
-		shield.takeDamage(damage);
+		shield.takeShieldDamage(damage);
 		Assert.assertEquals(500, shield.getEnergyLevel());
 	}
 	
@@ -57,7 +57,7 @@ public class ShieldTests {
 	public void DamageToShip() {
 		ShieldControl shield = new ShieldControl(1000);
 		int damage = 2000;
-		int subsystemDamage = shield.takeDamage(damage);
+		int subsystemDamage = shield.takeShieldDamage(damage);
 		Assert.assertEquals(1000, subsystemDamage);
 	}
 	
@@ -70,12 +70,12 @@ public class ShieldTests {
 		Assert.assertEquals(10, shield.getTenthsOfRepairDays());
 	}
 	
-//	@Test
-//	public void PreventEnergyTransferWhenDamaged() {
-//		ShieldControl shield = new ShieldControl(0);
-//		shield.damage(500);
-//		shield.transferEnergy(1000);
-//		Assert.assertEquals(0, shield.getEnergyLevel());
-//	}
+	@Test
+	public void PreventEnergyTransferWhenDamaged() {
+		ShieldControl shield = new ShieldControl(0);
+		shield.getDamage(500);
+		shield.transferEnergy(1000);
+		Assert.assertEquals(0, shield.getEnergyLevel());
+	}
 	
 }

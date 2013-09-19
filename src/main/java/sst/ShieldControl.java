@@ -26,19 +26,23 @@ public class ShieldControl extends SubSystem {
 	 */
 	public int transferEnergy(int energy) {
 		int remainingEnergy = 0;
-		energyLevel += energy;
-		if (energyLevel > _MAX_SHIELD_ENERGY) {
-			remainingEnergy = energyLevel - _MAX_SHIELD_ENERGY;
-			energyLevel = _MAX_SHIELD_ENERGY;
-		}
-		if (energyLevel < 0) {
-			remainingEnergy = energyLevel;
-			energyLevel = 0;
+		if (!isDamaged()) {
+			energyLevel += energy;
+			if (energyLevel > _MAX_SHIELD_ENERGY) {
+				remainingEnergy = energyLevel - _MAX_SHIELD_ENERGY;
+				energyLevel = _MAX_SHIELD_ENERGY;
+			}
+			if (energyLevel < 0) {
+				remainingEnergy = energyLevel;
+				energyLevel = 0;
+			}
+		} else {
+			remainingEnergy = energy;
 		}
 		return remainingEnergy;
 	}
 	
-	public int takeDamage(int damage) {
+	public int takeShieldDamage(int damage) {
 		int overflow = 0;
 		if (damage > energyLevel) {
 			overflow = damage - energyLevel;
