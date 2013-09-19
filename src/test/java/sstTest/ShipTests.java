@@ -11,7 +11,7 @@ public class ShipTests {
 	public void ShipConstruction() {
 		String registration = "NCC-1701";
 		Ship ship = new Ship(registration);
-		Assert.assertEquals("Ship registration should be NCC-1701", registration, ship.getRegistration());
+		Assert.assertEquals(registration, ship.getRegistration());
 	}
 
 	@Test
@@ -30,51 +30,46 @@ public class ShipTests {
 	@Test
 	public void ShipEnergyAtStart() {
 		Ship ship = new Ship("NCC-1701");
-		Assert.assertEquals(Ship._INITIAL_ENERGY, ship.getEnergyLevel());
+		Assert.assertEquals(50000, ship.getEnergyLevel());
 	}
 	@Test
 	public void TransferEnergyFromShipToShields() {
-		Ship ship = new Ship("NCC-1701");
-		int shipEnergyBefore = ship.getEnergyLevel();
+		Ship ship = new Ship("NCC-1701", 10000);
 		ship.transferEnergyToShields(1000);
 		Assert.assertEquals(1000, ship.getShieldLevel());
-		Assert.assertEquals(shipEnergyBefore-1000, ship.getEnergyLevel());
+		Assert.assertEquals(9000, ship.getEnergyLevel());
 	}
 	
 	@Test
 	public void TransferMoreEnergyThanShieldsCanTake() {
-		Ship ship = new Ship("NCC-1701");
-		ship.transferEnergyToShields(Shield._MAX_SHIELD_ENERGY-500);
-		int shipEnergyBefore = ship.getEnergyLevel();
+		Ship ship = new Ship("NCC-1701", 20000);
+		ship.transferEnergyToShields(9500);
 		ship.transferEnergyToShields(1000);
-		Assert.assertEquals(Shield._MAX_SHIELD_ENERGY, ship.getShieldLevel());
-		Assert.assertEquals(shipEnergyBefore-500, ship.getEnergyLevel());
+		Assert.assertEquals(10000, ship.getShieldLevel());
+		Assert.assertEquals(10000, ship.getEnergyLevel());
 	}
 	
 	@Test
 	public void TakeDamage() {
 		Ship ship = new Ship("NCC-1701");
-		ship.transferEnergyToShields(Shield._MAX_SHIELD_ENERGY);
+		ship.transferEnergyToShields(10000);
 		int damage = 1000;
-		int shieldBefore = ship.getShieldLevel();
 		ship.takeDamage(damage);
-		Assert.assertEquals(shieldBefore-damage, ship.getShieldLevel());
+		Assert.assertEquals(9000, ship.getShieldLevel());
 	}
 
 	@Test
 	public void TransferEnergyYouDoNotHave() {
-		Ship ship = new Ship("NCC-1701");
-		ship.transferEnergyToShields(Shield._MAX_SHIELD_ENERGY);
-		ship.takeDamage(Shield._MAX_SHIELD_ENERGY);
-		ship.transferEnergyToShields(Shield._MAX_SHIELD_ENERGY);
-		ship.takeDamage(Shield._MAX_SHIELD_ENERGY);
-		ship.transferEnergyToShields(Shield._MAX_SHIELD_ENERGY);
-		ship.takeDamage(Shield._MAX_SHIELD_ENERGY);
-		ship.transferEnergyToShields(Shield._MAX_SHIELD_ENERGY);
-		ship.takeDamage(Shield._MAX_SHIELD_ENERGY);
-		ship.transferEnergyToShields(Shield._MAX_SHIELD_ENERGY);
-		ship.takeDamage(Shield._MAX_SHIELD_ENERGY);
-		ship.transferEnergyToShields(Shield._MAX_SHIELD_ENERGY);
-		Assert.assertEquals(0, ship.getShieldLevel());
+		Ship ship = new Ship("NCC-1701", 1000);
+		int deficitEnergy = ship.transferEnergyToShields(2000);
+		Assert.assertEquals(1000, ship.getShieldLevel());
+		Assert.assertEquals(1000, deficitEnergy);
+	}
+	
+	@Test
+	public void CreateShipWithInitialEnergy() {
+		Ship ship = new Ship("NCC-1701", 2000);
+		int shipEnergy = ship.getEnergyLevel();
+		Assert.assertEquals(2000, shipEnergy);
 	}
 }
