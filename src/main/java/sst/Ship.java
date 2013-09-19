@@ -46,7 +46,7 @@ public class Ship {
 	/**
 	 * 
 	 * @param energy to transfer
-	 * @return energy deficit that ship was unable to transfer
+	 * @return energy left over from the transfer
 	 */
 	public int transferEnergyToShields(int energy) {
 		int transferAmount = energy;
@@ -55,17 +55,17 @@ public class Ship {
 			transferAmount = getEnergyLevel();
 			deficitEnergy = energy - transferAmount;
 		}
-		if (shield.getEnergyLevel() + energy > ShieldControl._MAX_SHIELD_ENERGY) {
-			transferAmount = shield.getEnergyLevel() + energy - ShieldControl._MAX_SHIELD_ENERGY;
-		}
-		shield.transferEnergy(transferAmount);
 		this.energy -= transferAmount;
-		return deficitEnergy;
+		int extraEnergy = shield.transferEnergy(transferAmount);
+		this.energy += extraEnergy;
+		return extraEnergy - deficitEnergy;
 	}
 	
 	public void takeDamage(int damage) {
 		int overflow = shield.takeDamage(damage);
-		//TODO: damage a subsystem
+		if (overflow > 0) {
+			//TODO: damage a subsystem			
+		}
 	}
 	
 	public boolean isSubSystemDamaged() {
