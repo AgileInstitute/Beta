@@ -30,4 +30,12 @@ public class SubSystem {
 			return true;
 		}
 	}
+	
+	public void repairDamage(int tenthsOfStarDays) {
+		if (this.tenthsOfRepairDays < tenthsOfStarDays) {
+			this.tenthsOfRepairDays = 0;
+		} else {
+			this.tenthsOfRepairDays -= tenthsOfStarDays;
+		}
+	}
 }

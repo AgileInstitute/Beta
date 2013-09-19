@@ -33,4 +33,19 @@ public class SubSystemTest {
 		
 		Assert.assertEquals(expected, actual);
 	}
+	
+	@Test
+	public void RepairDamageByTimeLapse() {
+		subSystem.getDamage(400);
+		subSystem.repairDamage(10);
+		Assert.assertEquals(true,subSystem.isDamaged());
+		Assert.assertEquals(10, subSystem.getTenthsOfRepairDays());
+	}
+	
+	@Test
+	public void CompletelyRepairByTimeLapse() {
+		subSystem.getDamage(200);
+		subSystem.repairDamage(10);
+		Assert.assertEquals(false, subSystem.isDamaged());		
+	}
 }
