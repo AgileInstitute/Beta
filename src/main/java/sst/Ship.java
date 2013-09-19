@@ -105,7 +105,7 @@ public class Ship {
 		}
 		return isDamaged;
 	}
-	
+
 	public void rest(int starDays) {
 		int effectiveStarDays = starDays;
 		if (docked)	{
