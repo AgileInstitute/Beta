@@ -106,16 +106,16 @@ public class Ship {
 		return isDamaged;
 	}
 
-	public void rest(int starDays) {
-		int effectiveStarDays = starDays;
+	public void rest(int tenthsOfStarDays) {
+		int effectiveTenthsOfStarDays = tenthsOfStarDays;
 		if (docked)	{
-			effectiveStarDays *= 2;
+			effectiveTenthsOfStarDays *= 2;
 		}
 		Iterator it = this.listOfSubSystems.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry subSystem = (Map.Entry) it.next();
 			SubSystem subSystemEntry = (SubSystem) subSystem.getValue();
-			subSystemEntry.repairDamage(effectiveStarDays);
+			subSystemEntry.repairDamage(effectiveTenthsOfStarDays);
 		}		
 	}
 	
