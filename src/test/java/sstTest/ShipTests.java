@@ -1,8 +1,8 @@
 package sstTest;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
-import sst.Shield;
 import sst.Ship;
 
 public class ShipTests {

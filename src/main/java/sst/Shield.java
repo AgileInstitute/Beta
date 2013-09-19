@@ -13,6 +13,10 @@ public class Shield {
 	}
 	
 	/**
+	 * Transfer energy to shields
+	 * If energy param is negative, then we're taking energy out of the shields to put into the ship.
+	 * If the energy transfer wasn't successfully completed, the remainder (excess or deficit) is
+	 * returned to calling function.
 	 * @param energy to transfer to shields
 	 * @return amount of energy that wasn't transferred to shields
 	 */
