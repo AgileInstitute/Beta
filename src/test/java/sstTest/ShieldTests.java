@@ -65,7 +65,7 @@ public class ShieldTests {
 	public void DamageShieldControlSubsystem() {
 		ShieldControl shield = new ShieldControl(0);
 		Assert.assertEquals(false, shield.isDamaged());
-		shield.damage(500);
+		shield.getDamage(500);
 		Assert.assertEquals(true,  shield.isDamaged());
 		Assert.assertEquals(10, shield.getTenthsOfRepairDays());
 	}

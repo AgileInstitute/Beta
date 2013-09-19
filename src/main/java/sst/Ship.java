@@ -64,7 +64,8 @@ public class Ship {
 	}
 	
 	public void takeDamage(int damage) {
-		shield.transferEnergy(-damage);
+		int overflow = shield.takeDamage(damage);
+		//TODO: damage a subsystem
 	}
 	
 	public boolean isSubSystemDamaged() {
