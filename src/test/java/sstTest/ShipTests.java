@@ -113,11 +113,28 @@ public class ShipTests {
 		Assert.assertSame("Engine should be returned", engine, ship.pickRandomSubSystem());
 	}
 
-//	@Test
-//	public void DamageSubSystem() {
-//		Ship ship = new Ship("NCC-1701", 2000, mapOfSubSystems);
-//		ship.takeDamage(200);
-//		boolean subSystemIsDamaged = ship.isSubSystemDamaged();
-//		Assert.assertEquals(true, subSystemIsDamaged);
-//	}
+	@Test
+	public void DamageSubSystem() {
+		Ship ship = new Ship("NCC-1701", 2000, mapOfSubSystems);
+		ship.takeDamage(200);
+		boolean subSystemIsDamaged = ship.isSubSystemDamaged();
+		Assert.assertEquals(true, subSystemIsDamaged);
+	}
+	
+	@Test
+	public void RestShipToRepairCompletely() {
+		Ship ship = new Ship("NCC-1701", 2000, mapOfSubSystems);
+		ship.takeDamage(1000);
+		ship.rest(50);
+		Assert.assertEquals(false, ship.isSubSystemDamaged());
+	}
+	
+	@Test
+	public void RestShipToRepairPartially() {
+		Ship ship = new Ship("NCC-1701", 2000, mapOfSubSystems);
+		ship.takeDamage(10000);
+		ship.rest(50);
+		Assert.assertEquals(true, ship.isSubSystemDamaged());
+
+	}
 }

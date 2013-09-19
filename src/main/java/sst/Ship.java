@@ -103,4 +103,13 @@ public class Ship {
 		}
 		return isDamaged;
 	}
+	
+	public void rest(int starDays) {
+		Iterator it = this.listOfSubSystems.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry subSystem = (Map.Entry) it.next();
+			SubSystem subSystemEntry = (SubSystem) subSystem.getValue();
+			subSystemEntry.repairDamage(starDays);
+		}		
+	}
 }
