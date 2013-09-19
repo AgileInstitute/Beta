@@ -28,9 +28,6 @@ public class ShipTests {
 		Ship ship = new Ship(registration, mapOfSubSystems);
 		Assert.assertEquals(registration, ship.getRegistration());
 	}
-	
-
-	
 
 	@Test
 	public void ShieldsAtStart() {
@@ -99,23 +96,25 @@ public class ShipTests {
 		int shipEnergy = ship.getEnergyLevel();
 		Assert.assertEquals(2000, shipEnergy);
 	}
-	
+
 	@Test
 	public void pickRandomSubSystemWithOneSubSystem() {
 		HashMap<String, SubSystem> mapOfSubSystems = new HashMap<String, SubSystem>();
 		SubSystem engine = new SubSystem(1500, 100);
 		Ship ship = new Ship("NCC-1701", 2000, mapOfSubSystems);
 		mapOfSubSystems.put("Engine", engine);
-		
-		Assert.assertSame("Engine should be returned", engine, ship.pickRandomSubSystem());
+
+		Assert.assertSame("Engine should be returned", engine,
+				ship.pickRandomSubSystem());
 	}
-	
+
 	public void pickRandomSubSystemWithMultipleSubSystems() {
 		Ship ship = new Ship("NCC-1701", 2000, mapOfSubSystems);
 		SubSystem engine = mapOfSubSystems.get("Engine");
 		Ship.generator = new MockRandom();
-		
-		Assert.assertSame("Engine should be returned", engine, ship.pickRandomSubSystem());
+
+		Assert.assertSame("Engine should be returned", engine,
+				ship.pickRandomSubSystem());
 	}
 
 	@Test
@@ -125,7 +124,7 @@ public class ShipTests {
 		boolean subSystemIsDamaged = ship.isSubSystemDamaged();
 		Assert.assertEquals(true, subSystemIsDamaged);
 	}
-	
+
 	@Test
 	public void RestShipToRepairCompletely() {
 		Ship ship = new Ship("NCC-1701", 2000, mapOfSubSystems);
@@ -133,15 +132,19 @@ public class ShipTests {
 		ship.rest(50);
 		Assert.assertEquals(false, ship.isSubSystemDamaged());
 	}
-	
+
 	@Test
 	public void RestShipToRepairPartially() {
+		SubSystem shieldControl = new ShieldControl(0);
+		HashMap<String, SubSystem> mapOfSubSystems = new HashMap<String, SubSystem>();
+		mapOfSubSystems.put("ShieldControl", shieldControl);
 		Ship ship = new Ship("NCC-1701", 2000, mapOfSubSystems);
 		ship.takeDamage(10000);
 		ship.rest(10);
 		Assert.assertEquals(true, ship.isSubSystemDamaged());
 
 	}
+<<<<<<< HEAD
 	
 	@Test
 	public void DockingWithNoStarbaseNearby() {
@@ -160,13 +163,31 @@ public class ShipTests {
 	@Test
 	public void RepairWhileDocked() {
 		mapOfSubSystems = new HashMap<String, SubSystem>();
-		mapOfSubSystems.put("ShieldControl", new ShieldControl(0));
+		mapOfSubSystems.put("Weapons", new SubSystem(1000, 200));
 
 		Ship ship = new Ship("NCC-1701", 2000, mapOfSubSystems);
-		ship.takeDamage(1000);
+		ship.takeDamage(2000);
 		ship.dock(true);
-		ship.rest(20);
+		ship.rest(10);
 		Assert.assertEquals(false, ship.isSubSystemDamaged());
 		
 	}
+=======
+
+	@Test
+	public void moveAndRepair() {
+		HashMap<String, SubSystem> mapOfSubSystems = new HashMap<String, SubSystem>();
+		SubSystem shieldControl = new ShieldControl(0);
+		Ship ship = new Ship("NCC-1701", 2000, mapOfSubSystems);
+		mapOfSubSystems.put("ShieldControl", shieldControl);
+		ship.takeDamage(1500);
+
+		Assert.assertEquals(30, shieldControl.getTenthsOfRepairDays());
+
+		ship.moveSectors(4);
+		Assert.assertEquals(0, shieldControl.getTenthsOfRepairDays());
+	}
+
+
+>>>>>>> Move command implementation.
 }
