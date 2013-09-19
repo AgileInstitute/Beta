@@ -160,12 +160,12 @@ public class ShipTests {
 	@Test
 	public void RepairWhileDocked() {
 		mapOfSubSystems = new HashMap<String, SubSystem>();
-		mapOfSubSystems.put("Weapons", new SubSystem(1000, 200));
+		mapOfSubSystems.put("ShieldControl", new ShieldControl(0));
 
 		Ship ship = new Ship("NCC-1701", 2000, mapOfSubSystems);
-		ship.takeDamage(2000);
+		ship.takeDamage(1000);
 		ship.dock(true);
-		ship.rest(10);
+		ship.rest(20);
 		Assert.assertEquals(false, ship.isSubSystemDamaged());
 		
 	}
