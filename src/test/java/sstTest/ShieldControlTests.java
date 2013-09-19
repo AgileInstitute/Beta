@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import sst.ShieldControl;
 
-public class ShieldTests {
+public class ShieldControlTests {
 	@Test
 	public void TransferEnergyToShields() {
 		ShieldControl shield = new ShieldControl();
@@ -65,17 +65,17 @@ public class ShieldTests {
 	public void DamageShieldControlSubsystem() {
 		ShieldControl shield = new ShieldControl(0);
 		Assert.assertEquals(false, shield.isDamaged());
-		shield.getDamage(500);
+		shield.damage(500);
 		Assert.assertEquals(true,  shield.isDamaged());
 		Assert.assertEquals(10, shield.getTenthsOfRepairDays());
 	}
 	
 	@Test
 	public void PreventEnergyTransferWhenDamaged() {
-		ShieldControl shield = new ShieldControl(0);
-		shield.getDamage(500);
-		shield.transferEnergy(1000);
-		Assert.assertEquals(0, shield.getEnergyLevel());
+		ShieldControl shieldControl = new ShieldControl(0);
+		shieldControl.damage(500);
+		shieldControl.transferEnergy(1000);
+		Assert.assertEquals(0, shieldControl.getEnergyLevel());
 	}
 	
 }

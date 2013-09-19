@@ -11,7 +11,7 @@ public class SubSystem {
 		this.maxTenthsOfRepairDays = maxRepairTenthsOfDays;
 	}
 	
-	public void getDamage(int energy) {
+	public void damage(int energy) {
 		int additionalRepairDays =  (energy * 10) /  (energyToDamageFactor);
 		this.tenthsOfRepairDays += additionalRepairDays;
 		if (this.tenthsOfRepairDays > this.maxTenthsOfRepairDays) {

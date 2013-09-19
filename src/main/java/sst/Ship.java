@@ -3,38 +3,35 @@ package sst;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 
 public class Ship {
 	public static final int _DEFAULT_INITIAL_ENERGY = 50000;
 	private String registration = null;
 	private ShieldControl shield = null;
 	int energy = 0;
-	private HashMap<String, SubSystem> listOfSubSystems = new HashMap<String, SubSystem> ();
-	
-	public Ship(String registration) {
+	private HashMap<String, SubSystem> listOfSubSystems = new HashMap<String, SubSystem>();
+
+	public Ship(String registration, HashMap<String, SubSystem> listOfSubSystems) {
 		this.registration = registration;
 		this.shield = new ShieldControl();
 		this.energy = _DEFAULT_INITIAL_ENERGY;
-		initializeSubSystems();
+		this.listOfSubSystems = listOfSubSystems;
 	}
-	
-	public Ship(String registration, int initialEnergy) {
+
+	public Ship(String registration, int initialEnergy,
+			HashMap<String, SubSystem> listOfSubSystems) {
 		this.registration = registration;
 		this.shield = new ShieldControl();
 		this.energy = initialEnergy;
-		initializeSubSystems();		
-	}
-	
-	private void initializeSubSystems() {
-		this.listOfSubSystems.put("Weapons", new SubSystem(2000, 200));
-		this.listOfSubSystems.put("Engine", new SubSystem(1500, 100));
-		this.listOfSubSystems.put("LifeSupport", new SubSystem(1000, 100));
+		this.listOfSubSystems = listOfSubSystems;
 	}
 
 	public String getRegistration() {
 		return registration;
 	}
-	
+
 	public int getShieldLevel() {
 		return this.shield.getEnergyLevel();
 	}
@@ -45,7 +42,8 @@ public class Ship {
 
 	/**
 	 * 
-	 * @param energy to transfer
+	 * @param energy
+	 *            to transfer
 	 * @return energy left over from the transfer
 	 */
 	public int transferEnergyToShields(int energy) {
@@ -60,25 +58,49 @@ public class Ship {
 		this.energy += extraEnergy;
 		return extraEnergy - deficitEnergy;
 	}
-	
+
 	public void takeDamage(int damage) {
+
 		int overflow = shield.takeShieldDamage(damage);
 		if (overflow > 0) {
-			//TODO: damage a subsystem			
+			SubSystem subSystem = pickRandomSubSystem();
+			subSystem.damage(overflow);
 		}
 	}
-	
+
+	public SubSystem pickRandomSubSystem() {
+		Set key = listOfSubSystems.keySet();
+		int i = 0;
+		int mapSize = listOfSubSystems.size();
+		int randomIndex = rnd(mapSize);
+		SubSystem subSystem = null;
+		for (Iterator iterator = key.iterator(); iterator.hasNext();) {
+			subSystem = listOfSubSystems.get(iterator.next());
+			if (i == randomIndex) {
+				break;
+			}
+			i++;
+		}
+		return subSystem;
+	}
+
+	public static Random generator = new Random();
+
+	public static int rnd(int maximum) {
+		return generator.nextInt(maximum);
+	}
+
 	public boolean isSubSystemDamaged() {
 		boolean isDamaged = false;
-	    Iterator it = this.listOfSubSystems.entrySet().iterator();
-	    while (it.hasNext()) {
-	        Map.Entry subSystem = (Map.Entry)it.next();
-	        SubSystem subSystemEntry = (SubSystem) subSystem.getValue();
-	        if (subSystemEntry.isDamaged()) {
-	        	isDamaged = true;
-	        	break;
-	        }
-	    }
-	    return isDamaged;
+		Iterator it = this.listOfSubSystems.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry subSystem = (Map.Entry) it.next();
+			SubSystem subSystemEntry = (SubSystem) subSystem.getValue();
+			if (subSystemEntry.isDamaged()) {
+				isDamaged = true;
+				break;
+			}
+		}
+		return isDamaged;
 	}
 }

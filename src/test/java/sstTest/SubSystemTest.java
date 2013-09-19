@@ -11,7 +11,7 @@ public class SubSystemTest {
 
 	@Test
 	public void repairDates() {
-		subSystem.getDamage(301);
+		subSystem.damage(301);
 
 		int expected = 15;
 		int actual = subSystem.getTenthsOfRepairDays();
@@ -27,7 +27,7 @@ public class SubSystemTest {
 
 	@Test
 	public void checkMaxDamage() {
-		subSystem.getDamage(3000);
+		subSystem.damage(3000);
 		int actual = subSystem.getTenthsOfRepairDays();
 		int expected = 100;
 		
@@ -36,7 +36,7 @@ public class SubSystemTest {
 	
 	@Test
 	public void RepairDamageByTimeLapse() {
-		subSystem.getDamage(400);
+		subSystem.damage(400);
 		subSystem.repairDamage(10);
 		Assert.assertEquals(true,subSystem.isDamaged());
 		Assert.assertEquals(10, subSystem.getTenthsOfRepairDays());
@@ -44,7 +44,7 @@ public class SubSystemTest {
 	
 	@Test
 	public void CompletelyRepairByTimeLapse() {
-		subSystem.getDamage(200);
+		subSystem.damage(200);
 		subSystem.repairDamage(10);
 		Assert.assertEquals(false, subSystem.isDamaged());		
 	}
