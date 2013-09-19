@@ -118,14 +118,13 @@ public class Ship {
 			subSystemEntry.repairDamage(effectiveTenthsOfStarDays);
 		}		
 	}
-<<<<<<< HEAD
 	
 	public boolean dock(boolean starbaseNearby) {
 		if (starbaseNearby && !docked) {
 			docked = true;
 		}
 		return docked;
-=======
+	}
 
 	/**
 	 * 
@@ -135,6 +134,5 @@ public class Ship {
 	public void moveSectors(int sectors) {
 		int timeSpentInTenthsOfStarDays = sectors * 100;
 		rest(timeSpentInTenthsOfStarDays);
->>>>>>> Move command implementation.
 	}
 }
