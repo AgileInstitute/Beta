@@ -1,21 +1,34 @@
 package sst;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 public class Ship {
 	public static final int _DEFAULT_INITIAL_ENERGY = 50000;
 	private String registration = null;
 	private Shield shield = null;
 	int energy = 0;
+	private HashMap<String, SubSystem> listOfSubSystems = new HashMap<String, SubSystem> ();
 	
 	public Ship(String registration) {
 		this.registration = registration;
 		this.shield = new Shield();
 		this.energy = _DEFAULT_INITIAL_ENERGY;
+		initializeSubSystems();
 	}
 	
 	public Ship(String registration, int initialEnergy) {
 		this.registration = registration;
 		this.shield = new Shield();
 		this.energy = initialEnergy;
+		initializeSubSystems();		
+	}
+	
+	private void initializeSubSystems() {
+		this.listOfSubSystems.put("Weapons", new SubSystem(2000, 200));
+		this.listOfSubSystems.put("Engine", new SubSystem(1500, 100));
+		this.listOfSubSystems.put("LifeSupport", new SubSystem(1000, 100));
 	}
 
 	public String getRegistration() {
@@ -52,5 +65,19 @@ public class Ship {
 	
 	public void takeDamage(int damage) {
 		shield.transferEnergy(-damage);
+	}
+	
+	public boolean isSubSystemDamaged() {
+		boolean isDamaged = false;
+	    Iterator it = this.listOfSubSystems.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry subSystem = (Map.Entry)it.next();
+	        SubSystem subSystemEntry = (SubSystem) subSystem.getValue();
+	        if (subSystemEntry.isDamaged()) {
+	        	isDamaged = true;
+	        	break;
+	        }
+	    }
+	    return isDamaged;
 	}
 }

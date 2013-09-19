@@ -72,4 +72,12 @@ public class ShipTests {
 		int shipEnergy = ship.getEnergyLevel();
 		Assert.assertEquals(2000, shipEnergy);
 	}
+	
+	@Test
+	public void DamageSubSystem() {
+		Ship ship = new Ship("NCC-1701",2000);
+		ship.takeDamage(200);
+		boolean subSystemIsDamaged = ship.isSubSystemDamaged();
+		Assert.assertEquals(true, subSystemIsDamaged);
+	}
 }
