@@ -138,8 +138,35 @@ public class ShipTests {
 	public void RestShipToRepairPartially() {
 		Ship ship = new Ship("NCC-1701", 2000, mapOfSubSystems);
 		ship.takeDamage(10000);
-		ship.rest(50);
+		ship.rest(10);
 		Assert.assertEquals(true, ship.isSubSystemDamaged());
 
+	}
+	
+	@Test
+	public void DockingWithNoStarbaseNearby() {
+		Ship ship = new Ship("NCC-1701", 2000, mapOfSubSystems);
+		boolean docked = ship.dock(false);
+		Assert.assertEquals(false, docked);
+	}
+
+	@Test
+	public void DockingWithStarbase() {
+		Ship ship = new Ship("NCC-1701", 2000, mapOfSubSystems);
+		boolean docked = ship.dock(true);
+		Assert.assertEquals(true, docked);
+	}
+	
+	@Test
+	public void RepairWhileDocked() {
+		mapOfSubSystems = new HashMap<String, SubSystem>();
+		mapOfSubSystems.put("Weapons", new SubSystem(1000, 200));
+
+		Ship ship = new Ship("NCC-1701", 2000, mapOfSubSystems);
+		ship.takeDamage(2000);
+		ship.dock(true);
+		ship.rest(10);
+		Assert.assertEquals(false, ship.isSubSystemDamaged());
+		
 	}
 }

@@ -11,6 +11,7 @@ public class Ship {
 	private String registration = null;
 	int energy = 0;
 	private HashMap<String, SubSystem> listOfSubSystems = new HashMap<String, SubSystem>();
+	boolean docked = false;
 
 	public Ship(String registration, HashMap<String, SubSystem> listOfSubSystems) {
 		this.registration = registration;
@@ -106,11 +107,22 @@ public class Ship {
 	}
 	
 	public void rest(int starDays) {
+		int effectiveStarDays = starDays;
+		if (docked)	{
+			effectiveStarDays *= 2;
+		}
 		Iterator it = this.listOfSubSystems.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry subSystem = (Map.Entry) it.next();
 			SubSystem subSystemEntry = (SubSystem) subSystem.getValue();
-			subSystemEntry.repairDamage(starDays);
+			subSystemEntry.repairDamage(effectiveStarDays);
 		}		
+	}
+	
+	public boolean dock(boolean starbaseNearby) {
+		if (starbaseNearby && !docked) {
+			docked = true;
+		}
+		return docked;
 	}
 }
