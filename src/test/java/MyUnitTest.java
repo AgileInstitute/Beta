@@ -1,9 +1,5 @@
 package test.java;
 
-import main.java.Book;
-import main.java.Edition;
-import main.java.User;
-
 import org.junit.*;
 
 public class MyUnitTest {
