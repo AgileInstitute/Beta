@@ -15,7 +15,7 @@ public class BiddingTest {
     @Test
     public void AllowBidder() {
         //Given
-        Auction auction = new Auction();
+        Auction auction = new Auction("seller");
         String bidder = "Moneybags";
         int amount = 10;
 
