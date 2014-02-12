@@ -61,7 +61,7 @@ public class Auction {
     public void close() {
         this.open = false;
 
-        if (this.currentBidAmount > this.reservePrice) {
+        if (this.currentBidAmount >= this.reservePrice) {
             this.winner = this.bidder;
         }
     }
