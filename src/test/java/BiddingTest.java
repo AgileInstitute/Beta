@@ -11,4 +11,17 @@ public class BiddingTest {
         Auction auction = new Auction("seller");
         Assert.assertTrue(auction.canBid());
     }
+
+    @Test
+    public void AllowBidder() {
+        //Given
+        Auction auction = new Auction();
+        String bidder = "Moneybags";
+        int amount = 10;
+
+        //When
+        boolean result = auction.makeBid(bidder, amount);
+
+        Assert.assertTrue(result);
+    }
 }
