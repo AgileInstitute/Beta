@@ -5,8 +5,17 @@ import main.java.Auction;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * Tests the functionality of the Auction class.
+ * 
+ *
+ */
 public class AuctionTest {
 
+	/**
+	 * Tests that the user (seller) that created the auction
+	 * cannot bid on that auction.
+	 */
 	@Test
 	public void canSellerBidOnOwnAuction() {
 		
@@ -20,6 +29,10 @@ public class AuctionTest {
 		
 	}
 	
+	/**
+	 * Tests that a user can bid on an auction.
+	 * 
+	 */
 	@Test
 	public void canBidOnAuction() {
 		
