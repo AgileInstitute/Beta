@@ -8,7 +8,6 @@ public class Auction {
     private String seller;
     private boolean open;
     private int currentBidAmount = 0;
-    private int currentBid;
 
     public Auction(String seller) {
         this.seller = seller;
@@ -17,7 +16,6 @@ public class Auction {
     public boolean isValidBidder(String bidder) {
         return !seller.equals(bidder);
     }
-
 
     /**
      * Return whether the given user can modify this instance of an Auction
@@ -40,6 +38,9 @@ public class Auction {
         }
     }
 
+    public int getCurrentBidAmount() {
+        return currentBidAmount;
+    }
     public void setCurrentBidAmount(int amount) {
         currentBidAmount = amount;
     }
@@ -60,16 +61,4 @@ public class Auction {
         this.open = false;
     }
 
-	public int getCurrentBid() {
-		return currentBid;
-	}
-
-	public void setCurrentBid(int currentBid) {
-		this.currentBid = currentBid;
-	}
-
-	public boolean PlaceBid(Bid bid)
-	{
-		return true;
-	}
 }
