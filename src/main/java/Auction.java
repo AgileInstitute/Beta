@@ -9,9 +9,11 @@ public class Auction {
     private String bidder;
     private String description = "";
     private String condition;
+    private String winner;
     private boolean open;
     private int currentBidAmount = 0;
     private int quantity = 0;
+    private int reservePrice;
     private int minBid;
     private int buyItNowAmount = 0;
 
@@ -56,9 +58,12 @@ public class Auction {
      * Closes the auction.
      *
      */
-    public String close() {
+    public void close() {  	
         this.open = false;
-        return bidder;
+
+        if (this.currentBidAmount > this.reservePrice) {
+	        this.winner = this.bidder;
+    	}
     }
 
     public String getCondition() {return condition;}
@@ -90,4 +95,20 @@ public class Auction {
         buyItNowAmount = amount;
     }
     public int getBuyItNowAmount() { return buyItNowAmount; }
+
+	public int getReservePrice() {
+		return reservePrice;
+	}
+
+	public void setReservePrice(int reservePrice) {
+		this.reservePrice = reservePrice;
+	}
+
+	public String getWinner() {
+		return winner;
+	}
+
+	public void setWinner(String winner) {
+		this.winner = winner;
+	}
 }

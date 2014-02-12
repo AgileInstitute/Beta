@@ -233,9 +233,9 @@ public class AuctionTest {
     	Auction auction = openAuctionFor(seller);
     	
     	auction.makeBid(bidder, auction.getCurrentBidAmount()+1);
-    	winner = auction.close();
+    	auction.close();
     	
-    	Assert.assertEquals(bidder, winner);
+    	Assert.assertEquals(bidder, auction.getWinner());
     	
     }
 
@@ -253,5 +253,28 @@ public class AuctionTest {
         int buyItNowAmount = 20;
         auction.setBuyItNowAmount(buyItNowAmount);
     }
-
+    
+    @Test
+    public void auctionHasNotMetReservePriceOnClose()
+    {
+    	String seller = "seller";
+    	String bidder = "bidder";
+    	Auction auction = openAuctionFor(seller);
+    	auction.setReservePrice(50);
+    	auction.makeBid(bidder, 1);
+    	auction.close();
+    	Assert.assertNull("The auction should not have a winner, as the reserve price was not met.", auction.getWinner());
+    }
+    
+    @Test
+    public void auctionHasMetReservePriceOnClose()
+    {
+    	String seller = "seller";
+    	String bidder = "bidder";
+    	Auction auction = openAuctionFor(seller);
+    	auction.setReservePrice(50);
+    	auction.makeBid(bidder, 51);
+    	auction.close();
+    	Assert.assertNotNull("The auction should have a winner, as the reserve price was met.", auction.getWinner());
+    }
 }
