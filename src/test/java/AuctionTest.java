@@ -87,7 +87,7 @@ public class AuctionTest {
     @Test
     public void AllowBidder() {
         //Given
-        Auction auction = new Auction("seller");
+        Auction auction = openAuctionFor("seller");
         String bidder = "Moneybags";
         int amount = 10;
 
@@ -101,7 +101,7 @@ public class AuctionTest {
     public void PreventBidder() {
         //Given
         String bidder = "seller";
-        Auction auction = new Auction(bidder);
+        Auction auction = openAuctionFor(bidder);
         int amount = 10;
 
         //When
@@ -113,7 +113,7 @@ public class AuctionTest {
     @Test
     public void disallowInsufficientBidder() {
         //Given
-        Auction auction = new Auction("seller");
+        Auction auction = openAuctionFor("seller");
         int amount = 10;
         auction.setCurrentBidAmount(amount);
         String new_bidder = "new bidder";
@@ -127,7 +127,7 @@ public class AuctionTest {
     @Test
     public void allowLargerBidder() {
         //Given
-        Auction auction = new Auction("seller");
+        Auction auction = openAuctionFor("seller");
         int amount = 10;
         auction.setCurrentBidAmount(amount);
         String new_bidder = "new bidder";
