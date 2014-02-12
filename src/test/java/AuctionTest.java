@@ -246,4 +246,12 @@ public class AuctionTest {
         auction.setBuyItNowAmount(buyItNowAmount);
         Assert.assertEquals(buyItNowAmount, auction.getBuyItNowAmount());
     }
+
+    @Test(expected=AuctionInProgressException.class)
+    public void sellerCannotSetBuyItNowOnOpenAuction() throws AuctionNotReadyException, AuctionInProgressException {
+        Auction auction = openAuctionFor("seller");
+        int buyItNowAmount = 20;
+        auction.setBuyItNowAmount(buyItNowAmount);
+    }
+
 }

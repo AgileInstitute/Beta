@@ -85,6 +85,9 @@ public class Auction {
         this.minBid = minBid;
     }
 
-    public void setBuyItNowAmount(int amount) { buyItNowAmount = amount; }
+    public void setBuyItNowAmount(int amount) throws AuctionInProgressException {
+        if (isOpen()) throw new AuctionInProgressException("Cannot set Buy It Now.  Auction is started.");
+        buyItNowAmount = amount;
+    }
     public int getBuyItNowAmount() { return buyItNowAmount; }
 }
