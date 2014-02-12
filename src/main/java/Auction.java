@@ -6,6 +6,7 @@ package main.java;
  */
 public class Auction {
     private String seller;
+	private String bidder;
     private String description = "";
     private String condition;
     private boolean open;
@@ -27,8 +28,10 @@ public class Auction {
     public boolean canBid() {return this.isOpen();}
 
     public boolean makeBid(String bidder, int amount) {
-        if (isValidBidder(bidder)) {
-            return amount > currentBidAmount;
+        if (isValidBidder(bidder) && canBid() && amount > currentBidAmount) {
+        	this.bidder = bidder;
+        	this.currentBidAmount = amount;
+            return true;
         }
         else {
             return false;
@@ -52,7 +55,10 @@ public class Auction {
      * Closes the auction.
      *
      */
-    public void close() {this.open = false;}
+    public String close() {
+        this.open = false;
+        return bidder;
+    }
 
     public String getCondition() {return condition;}
     public void setCondition(String condition) throws AuctionInProgressException {

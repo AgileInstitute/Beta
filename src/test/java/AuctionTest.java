@@ -87,12 +87,13 @@ public class AuctionTest {
     }
 
     @Test
-    public void AllowBidder() {
+    public void AllowBidder() throws AuctionNotReadyException {
         //Given
         Auction auction = openAuctionFor("seller");
         String bidder = "Moneybags";
         int amount = 10;
-
+        auction.open();
+        
         //When
         boolean result = auction.makeBid(bidder, amount);
 
@@ -127,12 +128,13 @@ public class AuctionTest {
     }
 
     @Test
-    public void allowLargerBidder() {
+    public void allowLargerBidder() throws AuctionNotReadyException {
         //Given
         Auction auction = openAuctionFor("seller");
         int amount = 10;
         auction.setCurrentBidAmount(amount);
         String new_bidder = "new bidder";
+        auction.open();
 
         //When
         boolean result = auction.makeBid(new_bidder, amount + 1);
@@ -220,6 +222,25 @@ public class AuctionTest {
         }
 
         Assert.assertTrue(exceptionCaught);
+    }
+
+    @Test
+    public void bidderNotifiedOfWin() throws AuctionNotReadyException, AuctionInProgressException {
+
+    	String seller = "seller";
+    	String bidder = "bidder";
+    	String description = "desc of auction";
+    	String winner;
+    	Auction auction = new Auction(seller);
+    	
+    	auction.setQuantity(1);
+    	auction.setDescription(description);
+    	auction.open();
+    	auction.makeBid(bidder, auction.getCurrentBidAmount()+1);
+    	winner = auction.close();
+    	
+    	Assert.assertEquals(bidder, winner);
+    	
     }
 
 }
