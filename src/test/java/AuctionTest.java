@@ -255,7 +255,6 @@ public class AuctionTest {
 
     	String seller = "seller";
     	String bidder = "bidder";
-    	String winner;
     	Auction auction = createAuctionFor(seller);
 
     	auction.makeBid(bidder, auction.getCurrentBidAmount()+1);
@@ -315,7 +314,7 @@ public class AuctionTest {
         auction.buyItNow(buyer);
 
         Assert.assertFalse(auction.isOpen());
-        Assert.assertEquals(buyer, auction.winner());
+        Assert.assertEquals(buyer, auction.getWinner());
     }
 
 }

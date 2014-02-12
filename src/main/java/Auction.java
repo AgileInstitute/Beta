@@ -58,19 +58,18 @@ public class Auction {
      * Closes the auction.
      *
      */
-    public void close() {  	
+    public void close() {
         this.open = false;
 
         if (this.currentBidAmount > this.reservePrice) {
-	        this.winner = this.bidder;
-    	}
+            this.winner = this.bidder;
+        }
     }
 
     public void buyItNow(String buyer) {
         makeBid(buyer, getBuyItNowAmount());
         close();
     }
-    public String winner() { return bidder; }
 
     public String getCondition() {return condition;}
     public void setCondition(String condition) throws AuctionInProgressException {
@@ -102,19 +101,9 @@ public class Auction {
     }
     public int getBuyItNowAmount() { return buyItNowAmount; }
 
-	public int getReservePrice() {
-		return reservePrice;
-	}
+    public int getReservePrice() { return reservePrice; }
+    public void setReservePrice(int reservePrice) { this.reservePrice = reservePrice; }
 
-	public void setReservePrice(int reservePrice) {
-		this.reservePrice = reservePrice;
-	}
-
-	public String getWinner() {
-		return winner;
-	}
-
-	public void setWinner(String winner) {
-		this.winner = winner;
-	}
+    public String getWinner() { return winner; }
+    public void setWinner(String winner) { this.winner = winner; }
 }
