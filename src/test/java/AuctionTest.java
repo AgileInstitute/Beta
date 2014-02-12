@@ -128,6 +128,40 @@ public class AuctionTest {
         Assert.assertTrue("Bid should have been acceptable",
                           result);
     }
+    
+    @Test
+    public void conditionSetOnOpenAuction() {
+    	String bidder = "seller";
+    	String condition = "Awesome!";
+    	Auction auction = new Auction(bidder);
+    	auction.open();
+    	boolean exceptionCaught = false;
+    	try {
+    		auction.setCondition(condition);
+		}
+    	catch (AuctionInProgressException e) {
+    		exceptionCaught = true;
+		}
+    	
+    	Assert.assertTrue(exceptionCaught);
+    }
+    
+    @Test
+    public void conditionSetOnNotOpenAuction() {
+    	String bidder = "seller";
+    	String condition = "Awesome!";
+    	Auction auction = new Auction(bidder);
+    	boolean exceptionCaught = false;
+    	try {
+    		auction.setCondition(condition);
+		}
+    	catch (AuctionInProgressException e) {
+    		exceptionCaught = true;
+		}
+    	
+    	Assert.assertFalse(exceptionCaught);
+    	Assert.assertEquals(condition, auction.getCondition());
+    }
 
     @Test
     public void minBidSetOnOpenAuction() {

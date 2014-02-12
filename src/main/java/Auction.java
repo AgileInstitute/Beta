@@ -7,7 +7,8 @@ package main.java;
 public class Auction {
     private String seller;
     private String description;
-    private boolean open;
+    private String condition;
+	private boolean open;
     private int currentBidAmount = 0;
     private int quantity = 0;
     private int minBid;
@@ -64,6 +65,15 @@ public class Auction {
     public void close() {
         this.open = false;
     }
+    
+    public String getCondition() {
+		return condition;
+	}
+
+	public void setCondition(String condition) throws AuctionInProgressException {
+		 if (isOpen()) throw new AuctionInProgressException("Cannot set condition.  Auction is started.");
+		this.condition = condition;
+	}
 
     public String getDescription() {
         return description;
