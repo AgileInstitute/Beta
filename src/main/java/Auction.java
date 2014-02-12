@@ -66,6 +66,12 @@ public class Auction {
     	}
     }
 
+    public void buyItNow(String buyer) {
+        makeBid(buyer, getBuyItNowAmount());
+        close();
+    }
+    public String winner() { return bidder; }
+
     public String getCondition() {return condition;}
     public void setCondition(String condition) throws AuctionInProgressException {
         if (isOpen()) throw new AuctionInProgressException("Cannot set condition.  Auction is started.");
