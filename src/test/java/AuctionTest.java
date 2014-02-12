@@ -1,6 +1,7 @@
 package test.java;
 
 import main.java.Auction;
+import main.java.AuctionInProgressException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -128,4 +129,101 @@ public class AuctionTest {
                           result);
     }
 
+    @Test
+    public void minBidSetOnOpenAuction() {
+    	String bidder = "seller";
+    	Auction auction = new Auction(bidder);
+    	auction.open();
+    	boolean exceptionCaught = false;
+    	try {
+    		auction.setMinBid(100);
+		}
+    	catch (AuctionInProgressException e) {
+    		exceptionCaught = true;
+		}
+    	
+    	Assert.assertTrue(exceptionCaught);
+    }
+    
+    @Test
+    public void minBidSetOnNotOpenAuction() {
+    	String bidder = "seller";
+    	int bid = 100;
+    	Auction auction = new Auction(bidder);
+    	boolean exceptionCaught = false;
+    	try {
+    		auction.setMinBid(bid);
+		}
+    	catch (AuctionInProgressException e) {
+    		exceptionCaught = true;
+		}
+    	
+    	Assert.assertFalse(exceptionCaught);
+    	Assert.assertEquals(bid, auction.getMinBid());
+    }
+    
+    @Test
+    public void descriptionSetOnOpenAuction() {
+    	String bidder = "seller";
+    	Auction auction = new Auction(bidder);
+    	auction.open();
+    	boolean exceptionCaught = false;
+    	try {
+    		auction.setDescription("My description");
+		}
+    	catch (AuctionInProgressException e) {
+    		exceptionCaught = true;
+		}
+    	
+    	Assert.assertTrue(exceptionCaught);
+    }
+    
+    @Test
+    public void descriptionSetOnNotOpenAuction() {
+    	String bidder = "seller";
+    	String descr = "My description";
+    	Auction auction = new Auction(bidder);
+    	boolean exceptionCaught = false;
+    	try {
+    		auction.setDescription(descr);
+		}
+    	catch (AuctionInProgressException e) {
+    		exceptionCaught = true;
+		}
+    	
+    	Assert.assertFalse(exceptionCaught);
+    	Assert.assertEquals(descr, auction.getDescription());
+    }
+    
+    @Test
+    public void quantitySetOnOpenAuction() {
+    	String bidder = "seller";
+    	Auction auction = new Auction(bidder);
+    	auction.open();
+    	boolean exceptionCaught = false;
+    	try {
+    		auction.setQuantity(100);
+		}
+    	catch (AuctionInProgressException e) {
+    		exceptionCaught = true;
+		}
+    	
+    	Assert.assertTrue(exceptionCaught);
+    }
+    
+    @Test
+    public void quantitySetOnNotOpenAuction() {
+    	String bidder = "seller";
+    	Auction auction = new Auction(bidder);
+    	boolean exceptionCaught = false;
+    	try {
+    		auction.setQuantity(100);
+		}
+    	catch (AuctionInProgressException e) {
+    		exceptionCaught = true;
+		}
+    	
+    	Assert.assertFalse(exceptionCaught);
+    	Assert.assertEquals(100, auction.getQuantity());
+    }
 }
