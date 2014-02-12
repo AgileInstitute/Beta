@@ -6,7 +6,7 @@ package main.java;
  */
 public class Auction {
     private String seller;
-	private String bidder;
+    private String bidder;
     private String description = "";
     private String condition;
     private boolean open;
@@ -29,8 +29,8 @@ public class Auction {
 
     public boolean makeBid(String bidder, int amount) {
         if (isValidBidder(bidder) && canBid() && amount > currentBidAmount) {
-        	this.bidder = bidder;
-        	this.currentBidAmount = amount;
+            this.bidder = bidder;
+            this.currentBidAmount = amount;
             return true;
         }
         else {
