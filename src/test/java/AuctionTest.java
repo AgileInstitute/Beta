@@ -100,6 +100,12 @@ public class AuctionTest {
     
 
     @Test
+    public void noBidUntilAuctionOpens() {
+    	Auction auction = new Auction("sellerx");
+    	Assert.assertFalse(auction.canBid());
+    }
+
+    @Test
     public void disallowInsufficientBidder() {
         //Given
         Auction auction = new Auction("seller");
