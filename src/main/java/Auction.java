@@ -91,11 +91,6 @@ public class Auction {
 	public void setCurrentBid(int currentBid) {
 		this.currentBid = currentBid;
 	}
-
-	public boolean PlaceBid(Bid bid)
-	{
-		return true;
-	}   
 	
 	public int getMinBid() {
 		return minBid;
