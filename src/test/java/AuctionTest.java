@@ -275,7 +275,7 @@ public class AuctionTest {
 
     @Test(expected=AuctionInProgressException.class)
     public void sellerCannotSetBuyItNowOnOpenAuction() throws AuctionNotReadyException, AuctionInProgressException {
-        Auction auction = openAuctionFor("seller");
+        Auction auction = createAuctionFor("seller");
         int buyItNowAmount = 20;
         auction.setBuyItNowAmount(buyItNowAmount);
     }
@@ -285,7 +285,7 @@ public class AuctionTest {
     {
     	String seller = "seller";
     	String bidder = "bidder";
-    	Auction auction = openAuctionFor(seller);
+    	Auction auction = createAuctionFor(seller);
     	auction.setReservePrice(50);
     	auction.makeBid(bidder, 1);
     	auction.close();
@@ -297,7 +297,7 @@ public class AuctionTest {
     {
     	String seller = "seller";
     	String bidder = "bidder";
-    	Auction auction = openAuctionFor(seller);
+    	Auction auction = createAuctionFor(seller);
     	auction.setReservePrice(50);
     	auction.makeBid(bidder, 51);
     	auction.close();
