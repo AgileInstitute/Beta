@@ -6,9 +6,9 @@ package main.java;
  */
 public class Auction {
     private String seller;
-    private String description;
+    private String description = "";
     private String condition;
-	private boolean open;
+    private boolean open;
     private int currentBidAmount = 0;
     private int quantity = 0;
     private int minBid;
@@ -54,8 +54,13 @@ public class Auction {
         return open;
     }
 
-    public void open() {
-        this.open = true;
+    public void open() throws AuctionNotReadyException {
+        if (getDescription().isEmpty() || getQuantity() == 0) {
+            throw new AuctionNotReadyException("Missing fields");
+        }
+        else {
+            this.open = true;
+        }
     }
 
     /**
@@ -65,15 +70,15 @@ public class Auction {
     public void close() {
         this.open = false;
     }
-    
-    public String getCondition() {
-		return condition;
-	}
 
-	public void setCondition(String condition) throws AuctionInProgressException {
-		 if (isOpen()) throw new AuctionInProgressException("Cannot set condition.  Auction is started.");
-		this.condition = condition;
-	}
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) throws AuctionInProgressException {
+        if (isOpen()) throw new AuctionInProgressException("Cannot set condition.  Auction is started.");
+        this.condition = condition;
+    }
 
     public String getDescription() {
         return description;
