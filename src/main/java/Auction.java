@@ -33,6 +33,6 @@ public class Auction {
         return true;
     }
     public boolean makeBid(String bidder, int amount) {
-        return true;
+        return ! canModify(bidder);
     }
 }
