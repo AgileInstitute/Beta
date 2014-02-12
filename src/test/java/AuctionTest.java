@@ -19,46 +19,58 @@ public class AuctionTest {
     public void canSellerBidOnOwnAuction() {
         String seller = "sellerx";
         Auction auction = new Auction(seller);
-        boolean canBid;
+        boolean result = auction.isValidBidder(seller);
 
-        canBid = auction.isValidBidder(seller);
-
-        Assert.assertFalse(canBid);
+        Assert.assertFalse(result);
     }
 
     /**
      * Tests that a user can bid on an auction.
      */
     @Test
-    public void canBidOnAuction() {
+    public void canUserBidOnAuction() {
         String seller = "sellerx";
         String bidder = "bidderx";
         Auction auction = new Auction(seller);
-        boolean canBid;
+        boolean result = auction.isValidBidder(bidder);
 
-        canBid = auction.isValidBidder(bidder);
-
-        Assert.assertTrue(canBid);
+        Assert.assertTrue(result);
     }
 
     @Test
-    public void checkAuctionUpdatePermissions() {
+    public void checkAuctionUpdateRestriction() {
         Auction auction = new Auction("sellerDude");
+
         Assert.assertFalse(auction.canModify("otherDude"));
     }
 
     @Test
-    public void checkAuctionUpdatePermissionsFails() {
+    public void checkAuctionUpdatePermission() {
         Auction auction = new Auction("sellerDude");
+
         Assert.assertTrue(auction.canModify("sellerDude"));
     }
 
     @Test
-    public void CanBid() {
+    public void noBidUntilAuctionOpens() {
+    	Auction auction = new Auction("sellerx");
+    	Assert.assertFalse(auction.canBid());
+    }
+
+    @Test
+    public void canBidWhenOpen() {
         Auction auction = new Auction("seller");
         auction.open();
 
         Assert.assertTrue(auction.canBid());
+    }
+
+    @Test
+    public void noBidOnClosedAuction() {
+    	Auction auction = new Auction("sellerx");
+    	auction.close();
+
+    	Assert.assertFalse(auction.canBid());
     }
 
     @Test
@@ -85,21 +97,6 @@ public class AuctionTest {
         boolean result = auction.makeBid(bidder, amount);
 
         Assert.assertFalse("Bidding on my own Auction", result);
-    }
-
-    @Test
-    public void noBidOnClosedAuction() {
-    	Auction auction = new Auction("sellerx");
-
-    	auction.close();
-
-    	Assert.assertFalse(auction.canBid());
-    }
-
-    @Test
-    public void noBidUntilAuctionOpens() {
-    	Auction auction = new Auction("sellerx");
-    	Assert.assertFalse(auction.canBid());
     }
 
     @Test
@@ -130,6 +127,5 @@ public class AuctionTest {
         Assert.assertTrue("Bid should have been acceptable",
                           result);
     }
-
 
 }
