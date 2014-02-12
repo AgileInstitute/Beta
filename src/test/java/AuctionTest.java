@@ -14,8 +14,8 @@ public class AuctionTest {
 	private Auction createAuctionFor(String seller, boolean isOpen) {
         Auction auction = new Auction(seller);
         try {
-            auction.setDescription("Action Figure");
-            auction.setQuantity(1);
+            auction.setDescription("Action Figure", seller);
+            auction.setQuantity(1, seller);
             if (isOpen) {
             	auction.open();
             }
@@ -154,7 +154,7 @@ public class AuctionTest {
         String bidder = "seller";
         String condition = "Awesome!";
         Auction auction = createAuctionFor(bidder);
-        auction.setCondition(condition);
+        auction.setCondition(condition, bidder);
     }
 
     @Test
@@ -162,7 +162,7 @@ public class AuctionTest {
         String bidder = "seller";
         String condition = "Awesome!";
         Auction auction = new Auction(bidder);
-        auction.setCondition(condition);
+        auction.setCondition(condition, bidder);
         Assert.assertEquals(condition, auction.getCondition());
     }
 
@@ -170,7 +170,7 @@ public class AuctionTest {
     public void minBidSetOnOpenAuction() throws AuctionInProgressException {
         String bidder = "seller";
         Auction auction = createAuctionFor(bidder);
-        auction.setMinBid(100);
+        auction.setMinBid(100, bidder);
     }
 
     @Test
@@ -178,7 +178,7 @@ public class AuctionTest {
     	String auctionOwner = "owner";
     	String bidder = "bidder";
     	Auction auction = createAuctionFor(auctionOwner, false);
-    	auction.setMinBid(2);
+    	auction.setMinBid(2, auctionOwner);
     	auction.open();
     	Assert.assertFalse(auction.makeBid(bidder, 1));
     }
@@ -188,7 +188,7 @@ public class AuctionTest {
     	String auctionOwner = "owner";
     	String bidder = "bidder";
     	Auction auction = createAuctionFor(auctionOwner, false);
-    	auction.setMinBid(2);
+    	auction.setMinBid(2, auctionOwner);
     	auction.open();
     	Assert.assertTrue(auction.makeBid(bidder, 2));
     }
@@ -198,41 +198,59 @@ public class AuctionTest {
         String bidder = "seller";
         int bid = 100;
         Auction auction = new Auction(bidder);
-        auction.setMinBid(bid);
+        auction.setMinBid(bid, bidder);
 
         Assert.assertEquals(bid, auction.getMinBid());
     }
 
     @Test(expected=AuctionInProgressException.class)
     public void descriptionSetOnOpenAuction() throws AuctionInProgressException {
-        String bidder = "seller";
-        Auction auction = createAuctionFor(bidder);
-        auction.setDescription("My description");
+        String seller = "joeuser";
+        Auction auction = createAuctionFor(seller);
+        auction.setDescription("My description", seller);
     }
 
     @Test
     public void descriptionSetOnNotOpenAuction() throws AuctionInProgressException {
-        String bidder = "seller";
+        String bidder = "joeuser";
         String descr = "My description";
         Auction auction = createAuctionFor(bidder, false);
-        auction.setDescription(descr);
+        auction.setDescription(descr, bidder);
 
         Assert.assertEquals(descr, auction.getDescription());
     }
 
+    @Test
+    public void descriptionSetOnNotOpenAuctionWrongUser() throws AuctionInProgressException {
+        String bidder = "joeuser";
+        String descr = "My description";
+        Auction auction = createAuctionFor(bidder, false);
+        auction.setDescription(descr, "otheruser");
+
+        Assert.assertNotEquals(descr, auction.getDescription());
+    }
+
     @Test(expected=AuctionInProgressException.class)
     public void quantitySetOnOpenAuction() throws AuctionInProgressException {
-        String bidder = "seller";
+        String bidder = "joeuser";
         Auction auction = createAuctionFor(bidder);
-        auction.setQuantity(100);
+        auction.setQuantity(100, bidder);
     }
 
     @Test
     public void quantitySetOnNotOpenAuction() throws AuctionInProgressException {
-        String bidder = "seller";
+        String bidder = "joeuser";
         Auction auction = createAuctionFor(bidder, false);
-        auction.setQuantity(100);
+        auction.setQuantity(100, bidder);
         Assert.assertEquals(100, auction.getQuantity());
+    }
+
+    @Test
+    public void quantitySetOnNotOpenAuctionWrongUser() throws AuctionInProgressException {
+        String bidder = "joeuser";
+        Auction auction = createAuctionFor(bidder, false);
+        auction.setQuantity(100, "otheruser");
+        Assert.assertNotEquals(100, auction.getQuantity());
     }
 
     @Test
@@ -268,7 +286,7 @@ public class AuctionTest {
     public void sellerCanSetBuyItNow() throws AuctionNotReadyException, AuctionInProgressException {
         Auction auction = new Auction("seller");
         int buyItNowAmount = 20;
-        auction.setBuyItNowAmount(buyItNowAmount);
+        auction.setBuyItNowAmount(buyItNowAmount, "seller");
         Assert.assertEquals(buyItNowAmount, auction.getBuyItNowAmount());
     }
 
@@ -276,7 +294,7 @@ public class AuctionTest {
     public void sellerCannotSetBuyItNowOnOpenAuction() throws AuctionNotReadyException, AuctionInProgressException {
         Auction auction = createAuctionFor("seller");
         int buyItNowAmount = 20;
-        auction.setBuyItNowAmount(buyItNowAmount);
+        auction.setBuyItNowAmount(buyItNowAmount, "seller");
     }
 
     @Test(expected=AuctionInProgressException.class)
@@ -285,7 +303,7 @@ public class AuctionTest {
     	String seller = "seller";
     	String bidder = "bidder";
     	Auction auction = createAuctionFor(seller, true);
-    	auction.setReservePrice(50);
+        auction.setReservePrice(50, seller);
     	auction.open();
     	auction.makeBid(bidder, 1);
     	auction.close();
@@ -298,7 +316,7 @@ public class AuctionTest {
     	String seller = "seller";
     	String bidder = "bidder";
     	Auction auction = createAuctionFor(seller, false);
-    	auction.setReservePrice(50);
+        auction.setReservePrice(50, seller);
     	auction.open();
     	auction.makeBid(bidder, 1);
     	auction.close();
@@ -311,7 +329,7 @@ public class AuctionTest {
     	String seller = "seller";
     	String bidder = "bidder";
     	Auction auction = createAuctionFor(seller, false);
-    	auction.setReservePrice(50);
+        auction.setReservePrice(50, seller);
     	auction.open();
     	auction.makeBid(bidder, 50);
     	auction.close();
@@ -322,9 +340,9 @@ public class AuctionTest {
     public void bidderCanBuyItNowOnOpenAuction() throws AuctionNotReadyException, AuctionInProgressException {
         Auction auction = new Auction("seller");
         int buyItNowAmount = 20;
-        auction.setDescription("Action Figure");
-        auction.setQuantity(1);
-        auction.setBuyItNowAmount(buyItNowAmount);
+        auction.setDescription("Action Figure", "seller");
+        auction.setQuantity(1, "seller");
+        auction.setBuyItNowAmount(buyItNowAmount, "seller");
         auction.open();
 
         String buyer = "buyer";
@@ -340,7 +358,7 @@ public class AuctionTest {
     	String seller = "seller";
     	String bidder = "bidder";
     	Auction auction = createAuctionFor(seller, false);
-    	auction.setReservePrice(50);
+    	auction.setReservePrice(50, seller);
     	auction.open();
     	auction.makeBid(bidder, 51);
     	auction.close();

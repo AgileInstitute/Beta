@@ -72,37 +72,43 @@ public class Auction {
     }
 
     public String getCondition() {return condition;}
-    public void setCondition(String condition) throws AuctionInProgressException {
+    public void setCondition(String condition, String userName) throws AuctionInProgressException {
         if (isOpen()) throw new AuctionInProgressException("Cannot set condition.  Auction is started.");
+        if (!userName.equals(seller)) { return; }
         this.condition = condition;
     }
 
     public String getDescription() {return description;}
-    public void setDescription(String description) throws AuctionInProgressException {
+    public void setDescription(String description, String userName) throws AuctionInProgressException {
         if (isOpen()) throw new AuctionInProgressException("Cannot set description.  Auction is started.");
+        if (!userName.equals(seller)) { return; }
         this.description = description;
     }
 
     public int getQuantity() {return quantity;}
-    public void setQuantity(int quantity) throws AuctionInProgressException {
+    public void setQuantity(int quantity, String userName) throws AuctionInProgressException {
         if (isOpen()) throw new AuctionInProgressException("Cannot set quantity.  Auction is started.");
+        if (!userName.equals(seller)) { return; }
         this.quantity = quantity;
     }
 
     public int getMinBid() {return minBid;}
-    public void setMinBid(int minBid) throws AuctionInProgressException {
+    public void setMinBid(int minBid, String userName) throws AuctionInProgressException {
         if (isOpen()) throw new AuctionInProgressException("Cannot set bid.  Auction is started.");
+        if (!userName.equals(seller)) { return; }
         this.minBid = minBid;
     }
 
-    public void setBuyItNowAmount(int amount) throws AuctionInProgressException {
+    public void setBuyItNowAmount(int amount, String userName) throws AuctionInProgressException {
         if (isOpen()) throw new AuctionInProgressException("Cannot set Buy It Now.  Auction is started.");
+        if (!userName.equals(seller)) { return; }
         buyItNowAmount = amount;
     }
     public int getBuyItNowAmount() { return buyItNowAmount; }
 
     public int getReservePrice() { return reservePrice; }
-	public void setReservePrice(int reservePrice) throws AuctionInProgressException {
+	public void setReservePrice(int reservePrice, String userName) throws AuctionInProgressException {
+        if (!userName.equals(seller)) { return; }
 		if (open) {
 			throw new AuctionInProgressException(
 					"Reserve price cannot be set once auction is open.");
@@ -112,5 +118,5 @@ public class Auction {
 	}
 
     public String getWinner() { return winner; }
-    public void setWinner(String winner) { this.winner = winner; }
+    private void setWinner(String winner) { this.winner = winner; }
 }
