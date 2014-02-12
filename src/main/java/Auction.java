@@ -14,7 +14,7 @@ public class Auction {
     private int currentBidAmount = 0;
     private int quantity = 0;
     private int reservePrice;
-    private int minBid;
+    private int minBid = 0;
     private int buyItNowAmount = 0;
 
     public Auction(String seller) {this.seller = seller;}
