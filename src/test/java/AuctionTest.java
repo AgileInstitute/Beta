@@ -229,13 +229,9 @@ public class AuctionTest {
 
     	String seller = "seller";
     	String bidder = "bidder";
-    	String description = "desc of auction";
     	String winner;
-    	Auction auction = new Auction(seller);
+    	Auction auction = openAuctionFor(seller);
     	
-    	auction.setQuantity(1);
-    	auction.setDescription(description);
-    	auction.open();
     	auction.makeBid(bidder, auction.getCurrentBidAmount()+1);
     	winner = auction.close();
     	
