@@ -102,7 +102,14 @@ public class Auction {
     public int getBuyItNowAmount() { return buyItNowAmount; }
 
     public int getReservePrice() { return reservePrice; }
-    public void setReservePrice(int reservePrice) { this.reservePrice = reservePrice; }
+	public void setReservePrice(int reservePrice) throws AuctionInProgressException {
+		if (open) {
+			throw new AuctionInProgressException(
+					"Reserve price cannot be set once auction is open.");
+		} else {
+			this.reservePrice = reservePrice;
+		}
+	}
 
     public String getWinner() { return winner; }
     public void setWinner(String winner) { this.winner = winner; }
