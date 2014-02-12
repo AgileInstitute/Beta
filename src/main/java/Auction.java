@@ -10,8 +10,7 @@ public class Auction {
     private boolean open;
     private int currentBidAmount = 0;
     private int quantity = 0;
-    private int currentBid;
-	private int minBid;
+    private int minBid;
 
     public Auction(String seller) {
         this.seller = seller;
@@ -33,7 +32,7 @@ public class Auction {
     public boolean canBid() {
         return this.isOpen();
     }
-    
+
     public boolean makeBid(String bidder, int amount) {
         if (isValidBidder(bidder)) {
             return amount > currentBidAmount;
@@ -66,38 +65,30 @@ public class Auction {
         this.open = false;
     }
 
-	public int getCurrentBid() {
-		return currentBid;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setDescription(String description) throws AuctionInProgressException {
+        if (isOpen()) throw new AuctionInProgressException("Cannot set description.  Auction is started.");
+        this.description = description;
+    }
 
-	public void setDescription(String description) throws AuctionInProgressException {
-		if (isOpen()) throw new AuctionInProgressException("Cannot set description.  Auction is started.");
-		this.description = description;
-	}
+    public int getQuantity() {
+        return quantity;
+    }
 
-	public int getQuantity() {
-		return quantity;
-	}
+    public void setQuantity(int quantity) throws AuctionInProgressException {
+        if (isOpen()) throw new AuctionInProgressException("Cannot set quantity.  Auction is started.");
+        this.quantity = quantity;
+    }
 
-	public void setQuantity(int quantity) throws AuctionInProgressException {
-		if (isOpen()) throw new AuctionInProgressException("Cannot set quantity.  Auction is started.");
-		this.quantity = quantity;
-	}
+    public int getMinBid() {
+        return minBid;
+    }
 
-	public void setCurrentBid(int currentBid) {
-		this.currentBid = currentBid;
-	}
-	
-	public int getMinBid() {
-		return minBid;
-	}
-
-	public void setMinBid(int minBid) throws AuctionInProgressException {
-		if (isOpen()) throw new AuctionInProgressException("Cannot set bid.  Auction is started.");
-		this.minBid = minBid;
-	}
+    public void setMinBid(int minBid) throws AuctionInProgressException {
+        if (isOpen()) throw new AuctionInProgressException("Cannot set bid.  Auction is started.");
+        this.minBid = minBid;
+    }
 }
