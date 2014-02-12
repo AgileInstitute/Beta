@@ -56,6 +56,8 @@ public class AuctionTest {
     @Test
     public void CanBid() {
         Auction auction = new Auction("seller");
+        auction.open();
+        
         Assert.assertTrue(auction.canBid());
     }
 
@@ -84,4 +86,16 @@ public class AuctionTest {
 
         Assert.assertFalse("Bidding on my own Auction", result);
     }
+    
+    @Test
+    public void noBidOnClosedAuction() {
+    	
+    	Auction auction = new Auction("sellerx");
+    	
+    	auction.close();
+    	
+    	Assert.assertFalse(auction.canBid());
+    	
+    }
+    
 }

@@ -7,6 +7,7 @@ package main.java;
 public class Auction {
 
 	private String seller;
+	private boolean open;
 	
 	public Auction(String seller) {
 		
@@ -30,9 +31,26 @@ public class Auction {
     }
 
     public boolean canBid() {
-        return true;
+        return this.isOpen();
     }
     public boolean makeBid(String bidder, int amount) {
         return ! canModify(bidder);
     }
+
+	public boolean isOpen() {
+		return open;
+	}
+
+	public void open() {
+		this.open = true;
+	}
+
+	/**
+	 * Closes the auction.
+	 * 
+	 */
+	public void close() {
+		this.open = false;
+	}
+
 }
