@@ -239,4 +239,11 @@ public class AuctionTest {
     	
     }
 
+    @Test
+    public void sellerCanSetBuyItNow() throws AuctionNotReadyException, AuctionInProgressException {
+        Auction auction = new Auction("seller");
+        int buyItNowAmount = 20;
+        auction.setBuyItNowAmount(buyItNowAmount);
+        Assert.assertEquals(buyItNowAmount, auction.getBuyItNowAmount());
+    }
 }

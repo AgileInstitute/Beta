@@ -13,6 +13,7 @@ public class Auction {
     private int currentBidAmount = 0;
     private int quantity = 0;
     private int minBid;
+    private int buyItNowAmount = 0;
 
     public Auction(String seller) {this.seller = seller;}
 
@@ -83,4 +84,7 @@ public class Auction {
         if (isOpen()) throw new AuctionInProgressException("Cannot set bid.  Auction is started.");
         this.minBid = minBid;
     }
+
+    public void setBuyItNowAmount(int amount) { buyItNowAmount = amount; }
+    public int getBuyItNowAmount() { return buyItNowAmount; }
 }
