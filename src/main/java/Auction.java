@@ -5,22 +5,18 @@ package main.java;
  *
  */
 public class Auction {
+    private String seller;
+    private boolean open;
+    private int currentBidAmount = 0;
 
-	private String seller;
-	private boolean open;
-	
-	public Auction(String seller) {
-		
-		this.seller = seller;
-		
-	}
-	
-	public boolean isValidBidder(String bidder) {
-		
-		return !seller.equals(bidder);
-		
-	}
-	
+    public Auction(String seller) {
+        this.seller = seller;
+    }
+
+    public boolean isValidBidder(String bidder) {
+        return !seller.equals(bidder);
+    }
+
     /**
      * Return whether the given user can modify this instance of an Auction
      * @param userName
@@ -34,23 +30,32 @@ public class Auction {
         return this.isOpen();
     }
     public boolean makeBid(String bidder, int amount) {
-        return ! canModify(bidder);
+        if (isValidBidder(bidder)) {
+            return amount > currentBidAmount;
+        }
+        else {
+            return false;
+        }
     }
 
-	public boolean isOpen() {
-		return open;
-	}
+    public void setCurrentBidAmount(int amount) {
+        currentBidAmount = amount;
+    }
 
-	public void open() {
-		this.open = true;
-	}
+    public boolean isOpen() {
+        return open;
+    }
 
-	/**
-	 * Closes the auction.
-	 * 
-	 */
-	public void close() {
-		this.open = false;
-	}
+    public void open() {
+        this.open = true;
+    }
+
+    /**
+     * Closes the auction.
+     *
+     */
+    public void close() {
+        this.open = false;
+    }
 
 }

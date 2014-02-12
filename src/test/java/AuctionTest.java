@@ -98,4 +98,35 @@ public class AuctionTest {
     	
     }
     
+
+    @Test
+    public void disallowInsufficientBidder() {
+        //Given
+        Auction auction = new Auction("seller");
+        int amount = 10;
+        auction.setCurrentBidAmount(amount);
+        String new_bidder = "new bidder";
+
+        //When
+        boolean result = auction.makeBid(new_bidder, amount);
+
+        Assert.assertFalse("Bid was not greater than current", result);
+    }
+
+    @Test
+    public void allowLargerBidder() {
+        //Given
+        Auction auction = new Auction("seller");
+        int amount = 10;
+        auction.setCurrentBidAmount(amount);
+        String new_bidder = "new bidder";
+
+        //When
+        boolean result = auction.makeBid(new_bidder, amount + 1);
+
+        Assert.assertTrue("Bid should have been acceptable",
+                          result);
+    }
+
+
 }
