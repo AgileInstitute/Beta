@@ -18,7 +18,9 @@ public class AuctionTest {
             auction.setQuantity(1);
             auction.open();
         }
-        catch (Exception e) {}
+        catch (Exception e) {
+            Assert.fail("openAuction failed when opening auction!");
+        }
 
         return auction;
     }
