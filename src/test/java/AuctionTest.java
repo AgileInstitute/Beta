@@ -10,19 +10,21 @@ import main.java.NotifyBidders;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
 
 /**
  * Tests the functionality of the Auction class.
  *
  */
 public class AuctionTest {
+	
+	private NotifyBidders notifyBiddersMock = spy(new NotifyBidders());
 
     private Auction createAuctionFor(String seller, boolean startOpen) {
-    	NotifyBidders notifyBiddersMock = mock(NotifyBidders.class);
-    	
-        Auction auction = new Auction(seller);        
+    
+        Auction auction = new Auction(seller);
         auction.setNotifyBidders(notifyBiddersMock);
         try {
             auction.setDescription("Action Figure", seller);
@@ -373,6 +375,7 @@ public class AuctionTest {
     	auction.open();
     	auction.makeBid(bidder, 51);
     	auction.close();
+    	verify(notifyBiddersMock, times(1)).notifyUsers(auction);
     	Assert.assertNotNull("The auction should have a winner, as the reserve price was met.", auction.getWinner());
     }
     
