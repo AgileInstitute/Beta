@@ -31,7 +31,7 @@ public class Auction {
     public boolean canBid() {return this.isOpen();}
 
     public boolean makeBid(String bidder, int amount) {
-        if (isValidBidder(bidder) && canBid() && amount > currentBidAmount && amount >= minBid) {
+        if (isValidBidder(bidder) && isOpen() && isValidBidAmount(amount)) {
             this.bidder = bidder;
             this.currentBidAmount = amount;
             return true;
@@ -39,6 +39,10 @@ public class Auction {
         else {
             return false;
         }
+    }
+    
+    private boolean isValidBidAmount(int bidAmount) {
+        return (bidAmount > currentBidAmount && bidAmount >= minBid);
     }
 
     public int getCurrentBidAmount() {return currentBidAmount;}
