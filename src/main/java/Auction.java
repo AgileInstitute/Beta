@@ -1,5 +1,10 @@
 package main.java;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * A class that simulates an Auction
  *
@@ -16,6 +21,7 @@ public class Auction {
     private int reservePrice;
     private int minBid = 0;
     private int buyItNowAmount = 0;
+    private Set<String> bidders = new HashSet<String>();
 
     public Auction(String seller) {this.seller = seller;}
 
@@ -34,6 +40,7 @@ public class Auction {
         if (isValidBidder(bidder) && canBid() && amount > currentBidAmount && amount >= minBid) {
             this.bidder = bidder;
             this.currentBidAmount = amount;
+            this.bidders.add(bidder);
             return true;
         }
         else {
@@ -119,4 +126,14 @@ public class Auction {
 
     public String getWinner() { return winner; }
     private void setWinner(String winner) { this.winner = winner; }
+
+	public Map<String, Boolean> notifyBidders() {
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		return map;
+		
+	}
+
+	public Set<String> getBidders() {
+		return bidders;
+	}
 }

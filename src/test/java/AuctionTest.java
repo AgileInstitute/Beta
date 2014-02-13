@@ -1,6 +1,10 @@
 package test.java;
 
-import main.java.*;
+import java.util.Set;
+
+import main.java.Auction;
+import main.java.AuctionInProgressException;
+import main.java.AuctionNotReadyException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -363,6 +367,28 @@ public class AuctionTest {
     	auction.makeBid(bidder, 51);
     	auction.close();
     	Assert.assertNotNull("The auction should have a winner, as the reserve price was met.", auction.getWinner());
+    }
+    
+    @Test
+    public void testGetBidders() {
+    	
+    	String seller = "sellerx";
+       	String bidder1 = "bidder1";
+       	String bidder2 = "bidder2";
+       	Set<String> bidders;
+    	
+    	// given open auction
+    	Auction auction = this.createAuctionFor(seller, true);
+    	
+    	// when place bid
+    	auction.makeBid(bidder1, auction.getCurrentBidAmount()+1);
+    	auction.makeBid(bidder2, auction.getCurrentBidAmount()+1);
+    	
+    	// then bidders should have bid
+    	
+    	Assert.assertTrue(auction.getBidders().contains(bidder1));
+    	Assert.assertTrue(auction.getBidders().contains(bidder2));
+
     }
     
 //    @Test
