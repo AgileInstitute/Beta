@@ -11,12 +11,12 @@ import org.junit.Test;
  */
 public class AuctionTest {
 
-	private Auction createAuctionFor(String seller, boolean isOpen) {
+	private Auction createAuctionFor(String seller, boolean startOpen) {
         Auction auction = new Auction(seller);
         try {
             auction.setDescription("Action Figure", seller);
             auction.setQuantity(1, seller);
-            if (isOpen) {
+            if (startOpen) {
             	auction.open();
             }
         }
