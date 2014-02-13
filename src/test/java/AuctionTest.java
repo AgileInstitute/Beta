@@ -227,7 +227,7 @@ public class AuctionTest {
         Auction auction = createAuctionFor(bidder, false);
         auction.setDescription(descr, "otheruser");
 
-        Assert.assertNotEquals(descr, auction.getDescription());
+        Assert.assertTrue(!descr.equals(auction.getDescription()));
     }
 
     @Test(expected=AuctionInProgressException.class)
@@ -250,7 +250,7 @@ public class AuctionTest {
         String bidder = "joeuser";
         Auction auction = createAuctionFor(bidder, false);
         auction.setQuantity(100, "otheruser");
-        Assert.assertNotEquals(100, auction.getQuantity());
+        Assert.assertTrue(100 != auction.getQuantity());
     }
 
     @Test
