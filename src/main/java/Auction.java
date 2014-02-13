@@ -40,7 +40,7 @@ public class Auction {
             return false;
         }
     }
-    
+
     private boolean isValidBidAmount(int bidAmount) {
         return (bidAmount > currentBidAmount && bidAmount >= minBid);
     }
@@ -111,15 +111,15 @@ public class Auction {
     public int getBuyItNowAmount() { return buyItNowAmount; }
 
     public int getReservePrice() { return reservePrice; }
-	public void setReservePrice(int reservePrice, String userName) throws AuctionInProgressException {
+    public void setReservePrice(int reservePrice, String userName) throws AuctionInProgressException {
         if (!userName.equals(seller)) { return; }
-		if (open) {
-			throw new AuctionInProgressException(
-					"Reserve price cannot be set once auction is open.");
-		} else {
-			this.reservePrice = reservePrice;
-		}
-	}
+        if (open) {
+            throw new AuctionInProgressException(
+                                                 "Reserve price cannot be set once auction is open.");
+        } else {
+            this.reservePrice = reservePrice;
+        }
+    }
 
     public String getWinner() { return winner; }
     private void setWinner(String winner) { this.winner = winner; }
