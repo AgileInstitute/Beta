@@ -15,13 +15,13 @@ import org.junit.Test;
  */
 public class AuctionTest {
 
-	private Auction createAuctionFor(String seller, boolean isOpen) {
+    private Auction createAuctionFor(String seller, boolean startOpen) {
         Auction auction = new Auction(seller);
         try {
             auction.setDescription("Action Figure", seller);
             auction.setQuantity(1, seller);
-            if (isOpen) {
-            	auction.open();
+            if (startOpen) {
+                auction.open();
             }
         }
         catch (Exception e) {
@@ -31,8 +31,8 @@ public class AuctionTest {
         return auction;
     }
 
-	private Auction createAuctionFor(String seller) {
-		return createAuctionFor(seller, true);
+    private Auction createAuctionFor(String seller) {
+        return createAuctionFor(seller, true);
     }
 
     /**
@@ -179,22 +179,22 @@ public class AuctionTest {
 
     @Test
     public void bidNotMeetMinBid() throws AuctionInProgressException, AuctionNotReadyException {
-    	String auctionOwner = "owner";
-    	String bidder = "bidder";
-    	Auction auction = createAuctionFor(auctionOwner, false);
-    	auction.setMinBid(2, auctionOwner);
-    	auction.open();
-    	Assert.assertFalse(auction.makeBid(bidder, 1));
+        String auctionOwner = "owner";
+        String bidder = "bidder";
+        Auction auction = createAuctionFor(auctionOwner, false);
+        auction.setMinBid(2, auctionOwner);
+        auction.open();
+        Assert.assertFalse(auction.makeBid(bidder, 1));
     }
 
     @Test
     public void bidMeetsMinBid() throws AuctionInProgressException, AuctionNotReadyException {
-    	String auctionOwner = "owner";
-    	String bidder = "bidder";
-    	Auction auction = createAuctionFor(auctionOwner, false);
-    	auction.setMinBid(2, auctionOwner);
-    	auction.open();
-    	Assert.assertTrue(auction.makeBid(bidder, 2));
+        String auctionOwner = "owner";
+        String bidder = "bidder";
+        Auction auction = createAuctionFor(auctionOwner, false);
+        auction.setMinBid(2, auctionOwner);
+        auction.open();
+        Assert.assertTrue(auction.makeBid(bidder, 2));
     }
 
     @Test
@@ -275,14 +275,14 @@ public class AuctionTest {
     @Test
     public void bidderNotifiedOfWin() throws AuctionNotReadyException, AuctionInProgressException {
 
-    	String seller = "seller";
-    	String bidder = "bidder";
-    	Auction auction = createAuctionFor(seller);
+        String seller = "seller";
+        String bidder = "bidder";
+        Auction auction = createAuctionFor(seller);
 
-    	auction.makeBid(bidder, auction.getCurrentBidAmount()+1);
-    	auction.close();
+        auction.makeBid(bidder, auction.getCurrentBidAmount()+1);
+        auction.close();
 
-    	Assert.assertEquals(bidder, auction.getWinner());
+        Assert.assertEquals(bidder, auction.getWinner());
 
     }
 
@@ -304,42 +304,42 @@ public class AuctionTest {
     @Test(expected=AuctionInProgressException.class)
     public void preventSetReservePriceOnOpenedAuction() throws AuctionNotReadyException, AuctionInProgressException
     {
-    	String seller = "seller";
-    	String bidder = "bidder";
-    	Auction auction = createAuctionFor(seller, true);
+        String seller = "seller";
+        String bidder = "bidder";
+        Auction auction = createAuctionFor(seller, true);
         auction.setReservePrice(50, seller);
-    	auction.open();
-    	auction.makeBid(bidder, 1);
-    	auction.close();
-    	Assert.assertNull("The auction should not have a winner, as the reserve price was not met.", auction.getWinner());
+        auction.open();
+        auction.makeBid(bidder, 1);
+        auction.close();
+        Assert.assertNull("The auction should not have a winner, as the reserve price was not met.", auction.getWinner());
     }
-    
+
     @Test
     public void auctionHasNotMetReservePriceOnClose() throws AuctionNotReadyException, AuctionInProgressException
     {
-    	String seller = "seller";
-    	String bidder = "bidder";
-    	Auction auction = createAuctionFor(seller, false);
+        String seller = "seller";
+        String bidder = "bidder";
+        Auction auction = createAuctionFor(seller, false);
         auction.setReservePrice(50, seller);
-    	auction.open();
-    	auction.makeBid(bidder, 1);
-    	auction.close();
-    	Assert.assertNull("The auction should not have a winner, as the reserve price was not met.", auction.getWinner());
+        auction.open();
+        auction.makeBid(bidder, 1);
+        auction.close();
+        Assert.assertNull("The auction should not have a winner, as the reserve price was not met.", auction.getWinner());
     }
 
     @Test
     public void auctionHasMetReservePriceOnClose() throws AuctionNotReadyException, AuctionInProgressException
     {
-    	String seller = "seller";
-    	String bidder = "bidder";
-    	Auction auction = createAuctionFor(seller, false);
+        String seller = "seller";
+        String bidder = "bidder";
+        Auction auction = createAuctionFor(seller, false);
         auction.setReservePrice(50, seller);
-    	auction.open();
-    	auction.makeBid(bidder, 50);
-    	auction.close();
-    	Assert.assertNotNull("The auction should have a winner, as the reserve price was met.", auction.getWinner());
+        auction.open();
+        auction.makeBid(bidder, 50);
+        auction.close();
+        Assert.assertNotNull("The auction should have a winner, as the reserve price was met.", auction.getWinner());
     }
-    
+
     @Test
     public void bidderCanBuyItNowOnOpenAuction() throws AuctionNotReadyException, AuctionInProgressException {
         Auction auction = new Auction("seller");
@@ -388,32 +388,7 @@ public class AuctionTest {
     	
     	Assert.assertTrue(auction.getBidders().contains(bidder1));
     	Assert.assertTrue(auction.getBidders().contains(bidder2));
-
+    	
     }
-    
-//    @Test
-//    public void testAutoBid() {
-//    	
-//    	String seller = "seller";
-//    	String bidder = "bidder";	
-//    	String bidder2 = "bidder";	
-//    	Auction auction = createAuctionFor(seller);
-//    	int bidAmount;
-//    	int newBidAmount;
-//    	boolean autoBid = true;
-//    	int maxBid;
-//    	
-//    	bidAmount = auction.getCurrentBidAmount() + 1;
-//    	newBidAmount = bidAmount + 1;
-//    	maxBid = bidAmount * 10;
-//    	
-//    	Bid autoBid = new Bid(bidder, bidAmount, autoBid, maxBid);
-//    	Bid newBid = new Bid(bidder2, bidAmount + 1, false);
-//    	Bid currentBid;
-//    	
-//    	auction.makeBid(autoBid);
-//    	auction.makeBid(newBid);
-//    	currentBid = auction.getCurrentBid();
-//    	
-//    }
 }
+
