@@ -11,20 +11,29 @@ import java.util.Set;
  */
 public class Auction {
     private String seller;
+    private Item item;
     private String bidder;
-    private String description = "";
-    private String condition;
     private String winner;
     private boolean open;
     private int currentBidAmount = 0;
-    private int quantity = 0;
     private int reservePrice;
     private int minBid = 0;
     private int buyItNowAmount = 0;
     private Set<String> bidders = new HashSet<String>();
     private NotifyBidders notifyBidders = new NotifyBidders();
 
-    public Auction(String seller) {this.seller = seller;}
+    public Auction(String seller) {
+        this.seller = seller;
+        this.item = new Item("", "", 0);
+    }
+
+    public Auction(String seller, Item item, int minBid, int reserve, int buyItNow) {
+        this.seller = seller;
+        this.item = item;
+        this.minBid = minBid;
+        this.reservePrice = reserve;
+        this.buyItNowAmount = buyItNow;
+    }
 
     public boolean isValidBidder(String bidder) {return !seller.equals(bidder);}
 
@@ -84,25 +93,37 @@ public class Auction {
         close();
     }
 
-    public String getCondition() {return condition;}
+    public String getCondition() {return item.getCondition();}
     public void setCondition(String condition, String userName) throws AuctionInProgressException {
         if (isOpen()) throw new AuctionInProgressException("Cannot set condition.  Auction is started.");
         if (!userName.equals(seller)) { return; }
-        this.condition = condition;
+        try {
+            item.setCondition(condition);
+        } catch (FrozenException e) {
+            throw new AuctionInProgressException("Cannot set condition.  Item is frozen.");
+        }
     }
 
-    public String getDescription() {return description;}
+    public String getDescription() {return item.getDescription();}
     public void setDescription(String description, String userName) throws AuctionInProgressException {
         if (isOpen()) throw new AuctionInProgressException("Cannot set description.  Auction is started.");
         if (!userName.equals(seller)) { return; }
-        this.description = description;
+        try {
+            item.setDescription(description);
+        } catch (FrozenException e) {
+            throw new AuctionInProgressException("Cannot set condition.  Item is frozen.");
+        }
     }
 
-    public int getQuantity() {return quantity;}
+    public int getQuantity() {return item.getQuantity();}
     public void setQuantity(int quantity, String userName) throws AuctionInProgressException {
         if (isOpen()) throw new AuctionInProgressException("Cannot set quantity.  Auction is started.");
         if (!userName.equals(seller)) { return; }
-        this.quantity = quantity;
+        try {
+            item.setQuantity(quantity);
+        } catch (FrozenException e) {
+            throw new AuctionInProgressException("Cannot set condition.  Item is frozen.");
+        }
     }
 
     public int getMinBid() {return minBid;}
