@@ -5,9 +5,13 @@ import java.util.Set;
 import main.java.Auction;
 import main.java.AuctionInProgressException;
 import main.java.AuctionNotReadyException;
+import main.java.NotifyBidders;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.BDDMockito.given;
 
 /**
  * Tests the functionality of the Auction class.
@@ -16,7 +20,10 @@ import org.junit.Test;
 public class AuctionTest {
 
     private Auction createAuctionFor(String seller, boolean startOpen) {
-        Auction auction = new Auction(seller);
+    	NotifyBidders notifyBiddersMock = mock(NotifyBidders.class);
+    	
+        Auction auction = new Auction(seller);        
+        auction.setNotifyBidders(notifyBiddersMock);
         try {
             auction.setDescription("Action Figure", seller);
             auction.setQuantity(1, seller);

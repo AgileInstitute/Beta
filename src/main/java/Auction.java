@@ -22,6 +22,7 @@ public class Auction {
     private int minBid = 0;
     private int buyItNowAmount = 0;
     private Set<String> bidders = new HashSet<String>();
+    private NotifyBidders notifyBidders = new NotifyBidders();
 
     public Auction(String seller) {this.seller = seller;}
 
@@ -74,6 +75,7 @@ public class Auction {
 
         if (this.currentBidAmount >= this.reservePrice) {
             this.winner = this.bidder;
+            this.notifyBidders();
         }
     }
 
@@ -131,13 +133,19 @@ public class Auction {
     public String getWinner() { return winner; }
     private void setWinner(String winner) { this.winner = winner; }
 
-	public Map<String, Boolean> notifyBidders() {
-		Map<String, Boolean> map = new HashMap<String, Boolean>();
-		return map;
-		
+	public void notifyBidders() {
+		getNotifyBidders().notifyUsers(this);		
 	}
 
 	public Set<String> getBidders() {
 		return bidders;
+	}
+
+	public NotifyBidders getNotifyBidders() {
+		return notifyBidders;
+	}
+
+	public void setNotifyBidders(NotifyBidders notifyBidders) {
+		this.notifyBidders = notifyBidders;
 	}
 }
