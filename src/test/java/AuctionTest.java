@@ -1,22 +1,19 @@
 package test.java;
 
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import java.util.Set;
 
 import main.java.Auction;
 import main.java.AuctionInProgressException;
 import main.java.AuctionNotReadyException;
-
 import main.java.Item;
-import main.java.FrozenException;
-
 import main.java.NotifyBidders;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.times;
 
 /**
  * Tests the functionality of the Auction class.

@@ -7,10 +7,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import junit.framework.Assert;
 import main.java.Auction;
 import main.java.NotifyBidders;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class NotifyBiddersTest {
