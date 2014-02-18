@@ -1,13 +1,6 @@
 Beta
 ====
 
-* Mike
-* David
-* Clint
-* Rob
-* Jay
-* Aaron
-
 Add to your ~/.gitconfig file:
 
     [core]
